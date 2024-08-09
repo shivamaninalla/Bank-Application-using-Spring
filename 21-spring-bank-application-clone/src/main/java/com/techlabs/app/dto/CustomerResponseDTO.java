@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @JsonInclude(value = Include.NON_NULL)
-public class CustomerResponseDTO {
+public class CustomerResponseDto {
 private long customer_id;
 	
 	
@@ -21,7 +21,7 @@ private long customer_id;
 	
 	private double totalBalance;
 	
-	private List<AccountResponseDTO> accounts;
+	private List<AccountResponseDto> accounts;
 	
 
 }

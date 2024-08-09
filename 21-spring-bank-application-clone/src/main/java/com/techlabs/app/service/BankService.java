@@ -1,42 +1,63 @@
 package com.techlabs.app.service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.techlabs.app.dto.AccountResponseDTO;
-import com.techlabs.app.dto.CustomerRequestDTO;
-import com.techlabs.app.dto.CustomerResponseDTO;
-import com.techlabs.app.dto.ProfileRequestDTO;
-import com.techlabs.app.dto.TransactionResponseDTO;
-import com.techlabs.app.dto.UserResponseDTO;
+import com.itextpdf.text.DocumentException;
+import com.techlabs.app.dto.AccountResponseDto;
+import com.techlabs.app.dto.CustomerRequestDto;
+import com.techlabs.app.dto.CustomerResponseDto;
+import com.techlabs.app.dto.ProfileRequestDto;
+import com.techlabs.app.dto.TransactionResponseDto;
+import com.techlabs.app.dto.UserResponseDto;
 import com.techlabs.app.util.PagedResponse;
+
+import jakarta.mail.MessagingException;
 
 public interface BankService {
 
-	PagedResponse<CustomerResponseDTO> getAllCustomers(int page, int size, String sortBy, String direction);
+PagedResponse<CustomerResponseDto> getAllCustomers(int page, int size, String sortBy, String direction);
 
-	//CustomerResponseDto addCustomer(CustomerRequestDto customerrequestdto);
+	
 
-	String deleteCustomerById(long id);
+	//String deleteCustomerById(long id);
 
-	CustomerResponseDTO findCustomerByid(long id);
+	CustomerResponseDto findCustomerByid(long id);
 
-	CustomerResponseDTO addAccount(long cid, int bid);
+	CustomerResponseDto addAccount(long cid, int bid);
 
-	TransactionResponseDTO doTransaction(long senderAccountno, long receiverAccountno, double amount);
+	TransactionResponseDto doTransaction(long senderAccountno, long receiverAccountno, double amount);
 
-	PagedResponse<TransactionResponseDTO> viewAllTransaction(LocalDateTime fromDate, LocalDateTime toDate, int page, int size, String sortBy, String direction);
+	PagedResponse<TransactionResponseDto> viewAllTransaction(LocalDateTime fromDate, LocalDateTime toDate, int page, int size, String sortBy, String direction);
 
-	PagedResponse<TransactionResponseDTO> viewPassbook(long accountNo, LocalDateTime fromDate, LocalDateTime toDate, int page, int size, String sortBy, String direction);
+	PagedResponse<TransactionResponseDto> viewPassbook(long accountNo, LocalDateTime fromDate, LocalDateTime toDate, int page, int size, String sortBy, String direction) throws DocumentException, IOException, MessagingException;
 
-	//List<TransactionResponseDto> searchByDate(LocalDateTime fromDate, LocalDateTime toDate);
+	UserResponseDto createCustomer(CustomerRequestDto customerRequestDto, long userID);
 
-	UserResponseDTO createCustomer(CustomerRequestDTO customerRequestDto, long userID);
+	String updateProfile(ProfileRequestDto profileRequestDto);
 
-	String updateProfile(ProfileRequestDTO profileRequestDto);
+	AccountResponseDto depositAmount(long accountNumber, double amount);
+	
+	List<AccountResponseDto> getAccounts();
 
-	AccountResponseDTO depositAmount(long accountNumber, double amount);
 
-	List<AccountResponseDTO> getAccounts();
 
+	String activateCustomer(long customerID);
+
+
+
+	String deleteAccount(long accountNumber);
+
+
+
+	String activateAccount(long accountNumber);
+
+
+
+	AccountResponseDto viewBalance(long accountNumber);
+
+
+
+	String deleteCustomer(long customerID);
 }

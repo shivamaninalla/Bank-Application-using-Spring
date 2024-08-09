@@ -9,20 +9,20 @@ import lombok.Data;
 
 @Data
 
-public class AccountRequestDTO {
+public class AccountRequestDto {
 	
 	
 	private long accountNumber;
 
 	
-	private BankRequestDTO bankrequestDto;
+	private BankRequestDto bankrequestDto;
 
 	
-	private CustomerRequestDTO customerRequestDto;
+	private CustomerRequestDto customerRequestDto;
 
-	private List<TransactionRequestDTO> sentTransactions;
+	private List<TransactionRequestDto> sentTransactions;
 	
-	private List<TransactionRequestDTO> receiverTransactions;
+	private List<TransactionRequestDto> receiverTransactions;
 
 	@NotNull
 	private double balance;

@@ -37,6 +37,8 @@ public class Customer {
 	
 	@OneToOne(mappedBy = "customer")
 	private User user;
+	
+	private boolean active=true;
 
 	public void addbankAccount(Account account) {
 	  accounts.add(account);

@@ -6,11 +6,11 @@ import com.techlabs.app.entity.Role;
 
 import lombok.Data;
 @Data
-public class UserResponseDTO {
+public class UserResponseDto {
 	private Long id;
 
 	private String email;
 	private String password;
 	private Set<Role> roles;
-	private CustomerResponseDTO customerResponseDto;
+	private CustomerResponseDto customerResponseDto;
 }

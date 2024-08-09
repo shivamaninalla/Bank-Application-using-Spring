@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 
-public class BankRequestDTO {
+public class BankRequestDto {
 	
 	private int bank_id;
 	
@@ -20,6 +20,6 @@ public class BankRequestDTO {
 	private String abbreviation;
 	
 	
-	private List<AccountRequestDTO> accounts;
+	private List<AccountRequestDto> accounts;
 
 }

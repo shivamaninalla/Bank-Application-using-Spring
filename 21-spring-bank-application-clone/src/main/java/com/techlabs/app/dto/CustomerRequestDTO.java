@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 
-public class CustomerRequestDTO {
+public class CustomerRequestDto {
 	
 	private long customer_id;
 	
@@ -24,7 +24,7 @@ public class CustomerRequestDTO {
 	@NotNull
 	private double totalBalance;
 	
-	private List<AccountRequestDTO> accounts;
+	private List<AccountRequestDto> accounts;
 	
 
 }

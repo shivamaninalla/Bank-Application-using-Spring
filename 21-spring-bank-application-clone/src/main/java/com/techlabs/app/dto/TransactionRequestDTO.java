@@ -14,7 +14,7 @@ import lombok.Data;
 
 @Data
 
-public class TransactionRequestDTO {
+public class TransactionRequestDto {
 	
 	private long id;
 	

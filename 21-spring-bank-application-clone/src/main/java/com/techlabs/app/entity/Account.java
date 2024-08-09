@@ -37,5 +37,7 @@ public class Account {
 
 	@NotNull
 	private double balance=1000.0;
+	
+	private boolean active=true;
 
 }

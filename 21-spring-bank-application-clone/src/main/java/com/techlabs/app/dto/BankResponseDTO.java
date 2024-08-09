@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @JsonInclude(value = Include.NON_NULL)
-public class BankResponseDTO {
+public class BankResponseDto {
 	
 	private int bank_id;
 	
@@ -20,6 +20,6 @@ public class BankResponseDTO {
 	private String abbreviation;
 	
 	
-	private List<AccountResponseDTO> accounts;
+	private List<AccountResponseDto> accounts;
 
 }
