@@ -1,0 +1,30 @@
+package com.monocept.app.dto;
+import java.util.HashSet;
+import java.util.Set;
+
+import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Entity
+public class CoursesDTO {
+   
+    private int id;
+
+    @NotBlank
+    private String title;
+
+   
+    private Set<StudentsDTO> students = new HashSet<>();
+    
+  
+}

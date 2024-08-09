@@ -1,0 +1,5 @@
+package com.monocept.app.repository;
+
+public interface BlogRepository {
+
+}

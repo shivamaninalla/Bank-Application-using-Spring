@@ -1,0 +1,30 @@
+package com.techlabs.app.service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.techlabs.app.dto.CustomerRequestDTO;
+import com.techlabs.app.dto.CustomerResponseDTO;
+import com.techlabs.app.dto.TransactionResponseDTO;
+
+public interface BankService {
+
+	List<CustomerResponseDTO> getAllCustomers(int page, int size, String sortBy, String direction);
+
+	CustomerResponseDTO addCustomer(CustomerRequestDTO customerrequestdto);
+
+	String deleteCustomerById(long id);
+
+	CustomerResponseDTO findCustomerByid(long id);
+
+	CustomerResponseDTO addAccount(long cid, int bid);
+
+	TransactionResponseDTO doTransaction(long senderAccountno, long receiverAccountno, double amount);
+
+	List<TransactionResponseDTO> viewAllTransaction();
+
+	List<TransactionResponseDTO> viewPassbook(long accountNo);
+
+	List<TransactionResponseDTO> searchByDate(LocalDateTime fromDate, LocalDateTime toDate);
+
+}

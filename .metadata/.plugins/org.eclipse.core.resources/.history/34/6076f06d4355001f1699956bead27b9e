@@ -1,0 +1,20 @@
+package com.techlabs.app.service;
+
+import java.util.List;
+
+import com.techlabs.app.dto.CustomerRequestDTO;
+import com.techlabs.app.dto.CustomerResponseDTO;
+
+public interface BankService {
+
+	List<CustomerResponseDTO> getAllCustomers();
+
+	CustomerResponseDTO addCustomer(CustomerRequestDTO customerrequestdto);
+
+	String deleteCustomerById(long id);
+
+	CustomerResponseDTO findCustomerByid(long id);
+
+	CustomerResponseDTO addAccount(long cid, int bid);
+
+}

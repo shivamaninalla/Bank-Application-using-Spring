@@ -1,0 +1,29 @@
+package com.monocept.app.entity;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="courses")
+public class Courses {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
+	
+	
+	@Notblank
+	private String title;
+	
+	
+	@ManyToMany(mappedBy = "courses")
+	private Set<Students> students=new HashSet<>();
+
+}

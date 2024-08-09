@@ -1,0 +1,88 @@
+package com.monocept.app.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.monocept.app.dto.BlogDTO;
+import com.monocept.app.dto.CommentDTO;
+import com.monocept.app.entity.Blog;
+import com.monocept.app.entity.Comment;
+import com.monocept.app.service.BlogService;
+import com.monocept.app.util.PagedResponse;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("api/")
+public class BlogController {
+
+	private BlogService blogService;
+
+	public BlogController(BlogService blogService) {
+		super();
+		this.blogService = blogService;
+	}
+
+	@GetMapping("getblogs")
+	public ResponseEntity<PagedResponse<BlogDTO>> getAllBlogs(@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size,
+			@RequestParam(name = "sort", defaultValue = "id") String sortBy,
+			@RequestParam(name = "direction", defaultValue = "id") String direction) {
+		System.out.println(page);
+		PagedResponse<BlogDTO> blogs = blogService.getAllBlogs(page, size, sortBy, direction);
+
+		return new ResponseEntity<PagedResponse<BlogDTO>>(blogs, HttpStatus.OK);
+
+	}
+
+	@PostMapping("addblog")
+	public Blog addBlog(@Valid @RequestBody Blog blog) {
+		return blogService.addBlog(blog);
+	}
+
+	@PostMapping("add_comment")
+	public Comment addComment(@Valid @RequestBody Comment comment) {
+		return blogService.addComment(comment);
+	}
+
+	@GetMapping("getcomments")
+	public ResponseEntity<PagedResponse<CommentDTO>> getAllComments(
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size,
+			@RequestParam(name = "sort", defaultValue = "id") String sortBy,
+			@RequestParam(name = "direction", defaultValue = "id") String direction) {
+		System.out.println(page);
+		PagedResponse<CommentDTO> comments = blogService.getAllComments(page, size, sortBy, direction);
+
+		return new ResponseEntity<PagedResponse<CommentDTO>>(comments, HttpStatus.OK);
+
+	}
+
+	@GetMapping("blog/{id}")
+	public ResponseEntity<BlogDTO> getBlogId(@PathVariable(name = "id") int id) {
+		BlogDTO blog = blogService.getBlogById(id);
+		return new ResponseEntity<BlogDTO>(blog, HttpStatus.OK);
+	}
+
+	@PutMapping()
+	public ResponseEntity<BlogDTO> updateEmployee(@Valid @RequestBody BlogDTO blogDto) {
+
+		BlogDTO updateEmployee = blogService.updateBlog(blogDto);
+		return new ResponseEntity<BlogDTO>(updateEmployee, HttpStatus.OK);
+	}
+	
+	
+	@PostMapping("{blogId}/comment/{commentId}")
+	public BlogDTO addBlogToComment(@PathVariable int blogId,@PathVariable int commentId) {
+		return blogService.addCommentToBlog(blogId,commentId);
+	}
+
+}

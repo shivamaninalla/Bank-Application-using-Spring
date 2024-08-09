@@ -1,0 +1,38 @@
+package com.techlabs.app.dto;
+
+import java.util.List;
+
+import com.techlabs.app.entity.Bank;
+import com.techlabs.app.entity.Customer;
+import com.techlabs.app.entity.Transaction;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
+
+public class AccountRequestDTO {
+	
+	
+	private long accountNumber;
+
+	
+	private Bank bank;
+
+	
+	private Customer customer;
+
+	private List<Transaction> sentTransactions;
+	
+	private List<Transaction> receiverTransactions;
+
+	@NotNull
+	private double balance;
+
+
+}

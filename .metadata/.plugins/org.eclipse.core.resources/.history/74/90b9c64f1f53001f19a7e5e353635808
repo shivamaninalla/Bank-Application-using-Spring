@@ -1,0 +1,22 @@
+package com.monocept.app.service;
+
+import java.util.List;
+
+import com.monocept.app.entity.Courses;
+import com.monocept.app.entity.Students;
+
+public interface StudentService {
+
+	List<Students> getAllStudents();
+
+	Students addStdudent(Students student);
+
+	Students getStudentById(int id);
+
+	void deleteStudentById(int id);
+
+	List<Courses> getAllCourses();
+
+	Courses addCourse(Courses course);
+
+}

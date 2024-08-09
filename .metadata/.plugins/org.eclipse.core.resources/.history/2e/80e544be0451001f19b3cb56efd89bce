@@ -1,0 +1,20 @@
+package com.monocept.app.service;
+
+import com.monocept.app.dto.BlogDTO;
+import com.monocept.app.entity.Blog;
+import com.monocept.app.entity.Comment;
+import com.monocept.app.util.PagedResponse;
+
+import jakarta.validation.Valid;
+
+public interface BlogService {
+
+	Blog addBlog(@Valid Blog blog);
+
+	PagedResponse<BlogDTO> getAllBlogs(int page, int size, String sortBy, String direction);
+
+	Comment addComment(@Valid Comment comment);
+
+	PagedResponse<Comment> getAllComments(int page, int size, String sortBy, String direction);
+
+}

@@ -1,0 +1,33 @@
+package com.techlabs.app.dto;
+
+import java.util.List;
+
+import com.techlabs.app.entity.Bank;
+import com.techlabs.app.entity.Customer;
+import com.techlabs.app.entity.Transaction;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
+
+@Data
+
+public class AccountResponseDTO {
+	
+	private long accountNumber;
+
+	
+	private Bank bank;
+
+	
+	private Customer customer;
+
+	private List<Transaction> sentTransactions;
+	
+	private List<Transaction> receiverTransactions;
+
+	@NotNull
+	private double balance;
+
+
+}

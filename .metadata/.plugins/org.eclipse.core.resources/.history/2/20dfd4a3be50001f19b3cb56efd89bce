@@ -1,0 +1,14 @@
+package com.monocept.app.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.monocept.app.entity.Instructor;
+
+@Service
+public interface InstructorService {
+
+	List<Instructor> getAllInstructors();
+
+}

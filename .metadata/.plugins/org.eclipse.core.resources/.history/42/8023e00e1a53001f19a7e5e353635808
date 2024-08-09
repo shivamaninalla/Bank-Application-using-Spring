@@ -1,0 +1,10 @@
+package com.monocept.app.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.monocept.app.entity.Courses;
+import com.monocept.app.entity.Students;
+
+public interface CourseRepository extends JpaRepository<Courses, Integer>{
+
+}

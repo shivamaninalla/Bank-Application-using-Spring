@@ -1,0 +1,13 @@
+package com.techlabs.app;
+
+
+@SpringBootApplication
+public class Application {
+	
+LoggerFactory.
+
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
+
+}

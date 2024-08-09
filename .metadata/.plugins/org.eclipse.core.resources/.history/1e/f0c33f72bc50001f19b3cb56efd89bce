@@ -1,0 +1,5 @@
+package com.monocept.app.service;
+
+public class InstructorServiceImpl {
+
+}

@@ -1,0 +1,18 @@
+package com.techlabs.app.controller;
+
+import com.techlabs.app.service.BankService;
+
+public class BankController {
+	
+	private BankService bankService;
+
+	public BankController(BankService bankService) {
+		super();
+		this.bankService = bankService;
+	}
+	
+	
+	
+	
+
+}

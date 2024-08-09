@@ -1,0 +1,17 @@
+package com.monocept.myapp.service;
+
+import java.util.Set;
+
+import com.monocept.myapp.dto.CustomerResponseDto;
+import com.monocept.myapp.entity.Role;
+
+import lombok.Data;
+@Data
+public class UserResponseDTO {
+	private Long id;
+
+	private String email;
+	private String password;
+	private Set<Role> roles;
+	private CustomerResponseDTO customerResponseDto;
+}
