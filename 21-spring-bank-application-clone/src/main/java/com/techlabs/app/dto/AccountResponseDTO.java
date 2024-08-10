@@ -29,6 +29,8 @@ public class AccountResponseDto {
 
 	@JsonInclude(value = Include.NON_DEFAULT)
 	private double balance;
+	
+	private boolean active;
 
 
 }

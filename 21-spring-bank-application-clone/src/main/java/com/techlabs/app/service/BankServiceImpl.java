@@ -131,24 +131,11 @@ public class BankServiceImpl implements BankService {
 		AccountResponseDto accountResponseDto = new AccountResponseDto();
 		accountResponseDto.setAccountNumber(account.getAccountNumber());
 		accountResponseDto.setBalance(account.getBalance());
+		accountResponseDto.setActive(account.isActive());
 		return accountResponseDto;
 	}
 
-//	@Override
-//	public String deleteCustomerById(long id) {
-//		
-//		
-//		Customer customer=customerRepository.findById(id).orElse(null);
-//		if(customer!=null) {
-//			customerRepository.deleteById(id);
-//			
-//		}
-//		else {
-//			throw new CustomerNotFoundException("customer not found with id: "+id);
-//		}
-//		return "customer deleted Successfully";
-//		
-//	}
+
 
 	@Override
 	public CustomerResponseDto findCustomerByid(long id) {
@@ -169,6 +156,9 @@ public class BankServiceImpl implements BankService {
 		 
 		 if(bank != null) {
 			 Customer customer = customerRepository.findById(cid).orElse(null);
+			 if(!customer.isActive()) {
+					throw new NoRecordFoundException("Customer is not activated "+customer.getCustomer_id());
+				}
 			 
 			 if(customer != null){
 				 
@@ -185,19 +175,22 @@ public class BankServiceImpl implements BankService {
 				 customer.setTotalBalance(total_salary);
 				 Customer save = customerRepository.save(customer);
 				 User user = customer.getUser();
-				 String subject = "Your Account Has Been Successfully Created at Pinnacle Bank!";
+				 String subject = "Your Account Has Been Successfully Created at SBI !";
 				 		String emailBody = "Dear " + customer.getFirstName() + " " + customer.getLastName() + ",\n\n"
 				 		    + "We are pleased to inform you that your account has been successfully created with us!\n\n"
 				 		    + "Your Customer ID is " + customer.getCustomer_id() + ". You can view all the details of your account by logging into our application and sending a request to get customer details by your ID.\n\n"
 				 		    + "If you need any assistance or have any questions, our support team is ready to help. We are committed to providing you with the best banking experience.\n\n"
-				 		    + "Thank you for choosing Pinnacle bank. We look forward to supporting your financial needs.\n\n"
+				 		    + "Thank you for choosing SBI. We look forward to supporting your financial needs.\n\n"
 				 		    + "Best regards,\n"
 				 		    + "Customer Relations Team\n"
-				 		    + "Pinnacle Bank";
+				 		    + "SBI";
 
 				 		sendEmail(user.getEmail(), subject,emailBody);
 				 return convertCustomerToCustomerResponseDto(save);
 				 
+			 }
+			 else {
+				 throw new CustomerNotFoundException("Customer with this id "+cid+" not found");
 			 }
 		 }
 		return null;
@@ -237,11 +230,21 @@ public class BankServiceImpl implements BankService {
 	@Override
 	public TransactionResponseDto doTransaction(long senderAccountNumber, long receiverAccountNumber, double amount) {
 		Optional<User> user = userRepository.findByEmail(getEmailFromSecurityContext());
+		Customer customer=user.get().getCustomer();
 		List<Account> accounts = user.get().getCustomer().getAccounts();
+		 if(!customer.isActive()) {
+				throw new NoRecordFoundException("Customer is not activated "+customer.getCustomer_id());
+			}
 		for (Account account : accounts) {
 			if (account.getAccountNumber() == senderAccountNumber) {
 				Account senderAccount = accountRepository.findById(senderAccountNumber).orElse(null);
 				Account receiverAccount = accountRepository.findById(receiverAccountNumber).orElse(null);
+				if(!senderAccount.isActive()) {
+					throw new NoRecordFoundException("Account is not activated "+senderAccount.getAccountNumber());
+					}
+				if(!receiverAccount.isActive()) {
+					throw new NoRecordFoundException("Account is not activated "+receiverAccount.getAccountNumber());
+					}
 				if (senderAccount == null || receiverAccount == null) {
 					throw new NoRecordFoundException("Please check the sender account number " + senderAccountNumber
 							+ " and receiver account number " + receiverAccountNumber);
@@ -363,17 +366,17 @@ public class BankServiceImpl implements BankService {
 		}
 		Customer customer = convertCustomerRequestToCustomer(customerRequestDto);
 		user.setCustomer(customer);
-		String subject = "Welcome to Unity Bank ! Your Customer ID Has Been Successfully Created";
+		String subject = "Welcome to SBI! Your Customer ID Has Been Successfully Created";
 		String emailBody = "Dear [Customer Name],\n\n"
-			    + "Welcome to Unity Bank! We are excited to have you join our community.\n\n"
+			    + "Welcome to SBI! We are excited to have you join our community.\n\n"
 			    + "We are pleased to confirm that your Customer ID has been successfully created. Our team is now working on completing the setup of your account. You can expect your account to be fully operational within a few days.\n\n"
 			    + "While you wait, we encourage you to familiarize yourself with the range of services we offer. We are committed to providing you with an exceptional banking experience.\n\n"
 			    + "Should you have any questions or require assistance, please feel free to reach out to our customer service team. We are here to support you at every step.\n\n"
-			    + "Thank you for choosing Unity Bank. We look forward to assisting you in achieving your financial goals.\n\n"
+			    + "Thank you for choosing SBI. We look forward to assisting you in achieving your financial goals.\n\n"
 			    + "Sincerely,\n"
 			    + "[Your Name]\n"
 			    + "Customer Relations Team\n"
-			    + "Unity Bank";
+			    + "SBI";
 		sendEmail(user.getEmail(), subject, emailBody);
 		return convertUserToUserDto(userRepository.save(user));
 	}
@@ -478,8 +481,8 @@ public class BankServiceImpl implements BankService {
 						+ user.get().getCustomer().getLastName() + ",\n\n"
 						+ "Attached to this email is your passbook for your recent transactions.\n\n"
 						+ "You can review the details of your transactions for the specified period. If you have any questions or need further assistance, please do not hesitate to reach out to us.\n\n"
-						+ "Thank you for choosing Spring Bank Application. We are committed to providing you with the best service possible.\n\n"
-						+ "Best regards,\n" + "Customer Relations Team\n" + "Spring Bank Application";
+						+ "Thank you for choosing SBI. We are committed to providing you with the best service possible.\n\n"
+						+ "Best regards,\n" + "Customer Relations Team\n" + "SBI";
 				MailStructure mailStructure = new MailStructure();
 				mailStructure.setToEmail(user.get().getEmail());
 				mailStructure.setEmailBody(passbookBody);
@@ -534,8 +537,12 @@ public class BankServiceImpl implements BankService {
 		if (customer == null) {
 			throw new NoRecordFoundException("Customer not associated with the user");
 		}
+		if(!customer.isActive()) {
+			throw new NoRecordFoundException("Customer is not activated and his id is "+customer.getCustomer_id());
+		}
+		
 		for (Account account : accounts) {
-			if (account.getAccountNumber() == accountNumber) {
+			if (account.getAccountNumber() == accountNumber && isAccountActive(account)) {
 				account.setBalance(account.getBalance() + amount);
 				accountRepository.save(account);
 				Double totalBalance = accountRepository.getTotalBalance(customer);
@@ -546,7 +553,7 @@ public class BankServiceImpl implements BankService {
 				transaction.setReceiverAccount(account);
 				transaction.setTransactionType(TransactionType.Transfer);
 				transactionRepository.save(transaction);
-				String subject = "Notification: Your Account Has Been Credited at Unity Bank!";
+				String subject = "Notification: Your Account Has Been Credited at SBI!";
 				String emailBody = "Dear " + customer.getFirstName() + " " + customer.getLastName() + ",\n\n"
 				    + "We are pleased to notify you that your account has been credited with an amount of " + transaction.getAmount() + " on " + LocalDateTime.now() + ".\n\n"
 				    + "Account Number: ######" +accountNumber+ "\n\n"
@@ -555,7 +562,7 @@ public class BankServiceImpl implements BankService {
 				    + "Thank you for banking with Spring Unity Bank. We look forward to continuing to support your financial needs.\n\n"
 				    + "Best regards,\n"
 				    + "Customer Relations Team\n"
-				    + "Unity Bank";
+				    + "SBI";
 
 				sendEmail(user.getEmail(), subject, emailBody);
 				return convertAccounttoAccountResponseDto(account);
@@ -634,6 +641,9 @@ public class BankServiceImpl implements BankService {
 		if (account.isActive()) {
 			throw new NoRecordFoundException("Account is already active");
 		}
+		if(!account.getCustomer().isActive()) {
+			throw new NoRecordFoundException("Customer is not activated customerId: "+account.getCustomer().getCustomer_id());
+		}
 		account.setActive(true);
 		accountRepository.save(account);
 		return "Account activated successfully";
@@ -654,7 +664,7 @@ public class BankServiceImpl implements BankService {
 
 	private boolean isAccountActive(Account account) {
 		if (!account.isActive()) {
-			return false;
+			throw new NoRecordFoundException("Your account is not activated");
 		}
 		return true;
 	}
@@ -670,18 +680,18 @@ private void sendMailToTheUsers(User senderUser, User receiverUser, Customer sen
 		    + "Thank you for banking with Unity Bank. We are dedicated to supporting your financial needs.\n\n"
 		    + "Best regards,\n"
 		    + "Customer Relations Team\n"
-		    + "Unity Bank";
+		    + "SBI";
 		sendEmail(senderUser.getEmail(), debitedsubject, debitedBody);
-		String creditedsubject = "Notification: Your Account Has Been Credited at Unity Bank!";
+		String creditedsubject = "Notification: Your Account Has Been Credited at SBI!";
 		String creditedBody = "Dear " + receiverCustomer.getFirstName() + " " + receiverCustomer.getLastName() + ",\n\n"
 		    + "We are pleased to notify you that your account has been credited with an amount of " + transaction.getAmount() + " on " + transaction.getTransactionDate() + ".\n\n"
 		    + "Account Number: ######" + receiverAccountNumber + "\n\n"
 		    + "You can view the details of this transaction by logging into our application and checking your account transactions.\n\n"
 		    + "If you have any questions or need further assistance, please contact our support team. We are here to ensure you have the best banking experience.\n\n"
-		    + "Thank you for banking with Unity Bank. We look forward to continuing to support your financial needs.\n\n"
+		    + "Thank you for banking with SBI. We look forward to continuing to support your financial needs.\n\n"
 		    + "Best regards,\n"
 		    + "Customer Relations Team\n"
-		    + "Unity Bank";
+		    + "SBI";
 		sendEmail(receiverUser.getEmail(),creditedsubject,creditedBody);
 		
 	}

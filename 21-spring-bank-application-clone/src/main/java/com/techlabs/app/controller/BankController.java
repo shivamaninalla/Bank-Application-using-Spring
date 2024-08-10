@@ -60,19 +60,15 @@ public class BankController {
 				HttpStatus.ACCEPTED);
 	}
 
-//	@DeleteMapping("/{id}")
-//	@PreAuthorize("hasRole('ADMIN')")
-//	public ResponseEntity<String> deleteCustomerById(@PathVariable(name = "id") long id) {
-//		String message = bankService.deleteCustomerById(id);
-//		return new ResponseEntity<String>(message, HttpStatus.OK);
-//	}
+
 
 	@GetMapping("/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<CustomerResponseDto> findCustomerbyId(@PathVariable(name = "id") long id) {
 		return new ResponseEntity<CustomerResponseDto>(bankService.findCustomerByid(id), HttpStatus.OK);
 	}
-
+	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("{cid}/account/{bid}")
 	public ResponseEntity<CustomerResponseDto> addAccount(@PathVariable(name = "cid") long cid,
 			@PathVariable(name = "bid") int bid) {

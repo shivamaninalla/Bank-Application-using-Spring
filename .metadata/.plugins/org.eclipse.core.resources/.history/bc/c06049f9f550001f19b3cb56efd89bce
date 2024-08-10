@@ -1,9 +1,0 @@
-package com.monocept.app.repository;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.monocept.app.entity.Blog;
-
-public class BlogRepository implements JpaRepository<Blog, Long>{
-
-}
