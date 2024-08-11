@@ -315,8 +315,7 @@ public class BankServiceImpl implements BankService {
 		} else {
 			sort = sort.ascending();
 		}
-//		fromDate = fromDate.truncatedTo(ChronoUnit.SECONDS);
-//		toDate = toDate.truncatedTo(ChronoUnit.SECONDS);
+
 		PageRequest pageRequest = PageRequest.of(page, size, sort);
 		System.out.println("Page request: " + pageRequest);
 		Page<Transaction> pagedResponse = transactionRepository.findAllByTransactionDateBetween(fromDate, toDate,
