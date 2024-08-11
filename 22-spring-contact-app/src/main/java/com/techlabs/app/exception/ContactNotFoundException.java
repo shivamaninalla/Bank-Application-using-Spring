@@ -1,0 +1,10 @@
+// Source code is decompiled from a .class file using FernFlower decompiler.
+package com.techlabs.app.exception;
+
+public class ContactNotFoundException extends RuntimeException {
+   private static final long serialVersionUID = 1L;
+
+   public ContactNotFoundException(String message) {
+      super(message);
+   }
+}

@@ -52,6 +52,10 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.existsByEmail(registerDto.getEmail())) {
             throw new ContactApiException(HttpStatus.BAD_REQUEST, "Email already exists!");
         }
+        if(!registerDto.isAdmin()) {
+            throw new ContactApiException(HttpStatus.BAD_REQUEST, "User cannot signup directly");
+
+        }
 
         User user = new User();
         user.setFirstName(registerDto.getFirstName());

@@ -1,12 +1,9 @@
 package com.techlabs.app.dto;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
-import jakarta.persistence.Id;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -18,6 +15,7 @@ public class RegisterDto {
 
 	
 	@NotBlank
+    @Size(min=2,max=20,message="please check the size of firstName.")
 	private String firstName;
 	
 	@NotBlank

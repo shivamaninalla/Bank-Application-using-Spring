@@ -109,14 +109,20 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	@Transactional
 	public List<Employee> getNameSalary() {
-		Query query = entityManager.createQuery("select e from Employee e",Employee.class);
-	//	query.setParameter(1, i);
-		List<Employee> resultList = query.getResultList();
-		Employee employee=resultList.get(0);
-		return new Employee(employee.getName(),employee.getSalary());
-		
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+//	@Override
+//	@Transactional
+//	public List<Employee> getNameSalary() {
+//		Query query = entityManager.createQuery("select e from Employee e",Employee.class);
+//	//	query.setParameter(1, i);
+//		List<Employee> resultList = query.getResultList();
+//		Employee employee=resultList.get(0);
+//		return new Employee(employee.getName(),employee.getSalary());
+//		
+//	}
 
 }

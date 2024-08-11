@@ -189,20 +189,19 @@ public class ContactServiceImpl implements ContactService {
 		ContactResponseDto contactResponseDto = new ContactResponseDto();
 		contactResponseDto.setFirstName(save.getFirstName());
 		contactResponseDto.setLastName(save.getLastName());
-		contactResponseDto.setId(save.getId());
 		contactResponseDto.setActive(save.isActive());
-		contactResponseDto.setContactDetails(convertContactDetailsToContactDetailsResponseDto(save.getContactDetails()) );
-		// contactResponseDto.setUser(convertUserToUserResponseDto(save.getUser()));
+		contactResponseDto.setId(save.getId());
 		return contactResponseDto;
 	}
 
 	private Contact convertContactRequestDtoToContact(ContactRequestDto contactRequestDto, User user) {
 		Contact contact = new Contact();
+
 		contact.setFirstName(contactRequestDto.getFirstName());
 		contact.setLastName(contactRequestDto.getLastName());
 		contact.setId(contactRequestDto.getId());
-		contact.setActive(true);
 		contact.setUser(user);
+		contact.setActive(true);
 		return contact;
 	}
 

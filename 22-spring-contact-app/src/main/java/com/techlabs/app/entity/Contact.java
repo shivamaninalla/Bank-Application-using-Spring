@@ -13,6 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -30,7 +31,7 @@ public class Contact {
 	@NotBlank
 	private String lastName;
 	
-	@NotBlank
+	@NotNull
 	private boolean active;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

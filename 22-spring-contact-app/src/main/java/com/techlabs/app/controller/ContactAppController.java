@@ -24,6 +24,8 @@ import com.techlabs.app.dto.UserResponseDto;
 import com.techlabs.app.service.ContactService;
 import com.techlabs.app.util.PagedResponse;
 
+import jakarta.validation.Valid;
+
 @RequestMapping("api/auth")
 @RestController
 public class ContactAppController {
@@ -54,7 +56,7 @@ public class ContactAppController {
 
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto) {
+	public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserRequestDto userRequestDto) {
 
 		return new ResponseEntity<UserResponseDto>(contactService.createUser(userRequestDto), HttpStatus.ACCEPTED);
 	}
@@ -77,7 +79,7 @@ public class ContactAppController {
 	
 	@PostMapping("contact")
 	@PreAuthorize("hasRole('STAFF')")
-	public ResponseEntity<ContactResponseDto> createContactforStaff(@RequestBody ContactRequestDto contactRequestDto) {
+	public ResponseEntity<ContactResponseDto> createContactforStaff(@Valid @RequestBody ContactRequestDto contactRequestDto) {
 		ContactResponseDto contact = contactService.createContactforStaff(contactRequestDto);
 
 		return new ResponseEntity<ContactResponseDto>(contact, HttpStatus.ACCEPTED);
@@ -105,7 +107,7 @@ public class ContactAppController {
 	
 	@PutMapping("update_contact/{contact_id}")
 	@PreAuthorize("hasRole('STAFF')")
-	public ResponseEntity<ContactResponseDto> updateContactForStaff(@RequestBody ContactRequestDto contactRequestDto,@PathVariable(name="contact_id") int contact_id){
+	public ResponseEntity<ContactResponseDto> updateContactForStaff( @RequestBody ContactRequestDto contactRequestDto,@PathVariable(name="contact_id") int contact_id){
 		return new ResponseEntity<ContactResponseDto>(contactService.updateContactForStaff(contactRequestDto,contact_id), HttpStatus.ACCEPTED);
 
 	}
@@ -122,7 +124,7 @@ public class ContactAppController {
 	
 	@PostMapping("contacts/{contactId}/details")
 	@PreAuthorize("hasRole('STAFF')")
-	public ResponseEntity<ContactDetailsResponseDto> createContactDetailsforContact(@RequestBody ContactDetailsRequestDto contactDetailsRequestDto,@PathVariable(name="contactId") int contactId) {
+	public ResponseEntity<ContactDetailsResponseDto> createContactDetailsforContact(@Valid @RequestBody ContactDetailsRequestDto contactDetailsRequestDto,@PathVariable(name="contactId") int contactId) {
 		ContactDetailsResponseDto contact = contactService.createContactDetailsforContact(contactDetailsRequestDto,contactId);
 
 		return new ResponseEntity<ContactDetailsResponseDto>(contact, HttpStatus.ACCEPTED);
@@ -144,7 +146,7 @@ public class ContactAppController {
 	
 	@PutMapping("contact-details/{contact_id}/{contact_details_id}")
 	@PreAuthorize("hasRole('STAFF')")
-	public ResponseEntity<ContactDetailsResponseDto> updateContactDetailsofContact(@RequestBody ContactDetailsRequestDto contactDetailsRequestDto,@PathVariable(name="contact_id") int contact_id,@PathVariable(name="contact_id") int contact_details_id){
+	public ResponseEntity<ContactDetailsResponseDto> updateContactDetailsofContact( @RequestBody ContactDetailsRequestDto contactDetailsRequestDto,@PathVariable(name="contact_id") int contact_id,@PathVariable(name="contact_id") int contact_details_id){
 		return new ResponseEntity<ContactDetailsResponseDto>(contactService.updateContactDetailsofContact(contactDetailsRequestDto,contact_id,contact_details_id), HttpStatus.ACCEPTED);
 
 	}

@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -18,7 +19,7 @@ public class ContactRequestDto {
 	@NotBlank
 	private String lastName;
 	
-	@NotBlank
+	@NotNull
 	private boolean active;
 
 	private UserRequestDto user;
