@@ -26,6 +26,8 @@ import com.techlabs.app.dto.UserResponseDto;
 import com.techlabs.app.service.BankService;
 import com.techlabs.app.util.PagedResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("api/admin")
 @PreAuthorize("hasRole('ADMIN')")
@@ -37,6 +39,7 @@ public class AdminController {
 		this.bankService = bankService;
 	}
 
+	@Operation(summary = "Add Customer")
 	@PostMapping("/{userID}")
 	public ResponseEntity<UserResponseDto> addCustomer(@RequestBody CustomerRequestDto customerRequestDto,
 			@PathVariable(name = "userID") long userID) {
@@ -44,12 +47,14 @@ public class AdminController {
 				HttpStatus.ACCEPTED);
 	}
 
+	@Operation(summary = "Create Account")
 	@PostMapping("{cid}/account/{bid}")
 	public ResponseEntity<CustomerResponseDto> createAccount(@PathVariable(name = "cid") long cid,
 			@PathVariable(name = "bid") int bid) {
 		return new ResponseEntity<CustomerResponseDto>(bankService.addAccount(cid, bid), HttpStatus.OK);
 	}
-
+	
+	@Operation(summary = "View All Customers")
 	@GetMapping
 	public ResponseEntity<PagedResponse<CustomerResponseDto>> viewAllCustomers(
 			@RequestParam(name = "page", defaultValue = "0") int page,
@@ -60,11 +65,13 @@ public class AdminController {
 		return new ResponseEntity<PagedResponse<CustomerResponseDto>>(customer, HttpStatus.ACCEPTED);
 	}
 
+	@Operation(summary = "View Customer By Id")
 	@GetMapping("/{id}")
 	public ResponseEntity<CustomerResponseDto> viewCustomerbyId(@PathVariable(name = "id") long id) {
 		return new ResponseEntity<CustomerResponseDto>(bankService.findCustomerByid(id), HttpStatus.OK);
 	}
 
+	@Operation(summary = "View All Transactions")
 	@GetMapping("/transactions")
 	public ResponseEntity<PagedResponse<TransactionResponseDto>> viewAllTransactions(
 			@RequestParam(name = "page", defaultValue = "0") int page,
@@ -82,21 +89,28 @@ public class AdminController {
 		return new ResponseEntity<PagedResponse<TransactionResponseDto>>(transactions, HttpStatus.OK);
 	}
 
+	
+	@Operation(summary = "Activate Existing Customer")
 	@PutMapping("/active/{customerID}")
 	public String activateExistingCustomer(@PathVariable(name = "customerID") long customerID) {
 		return bankService.activateCustomer(customerID);
 	}
 
+	
+	@Operation(summary = "Activate Existing Account")
 	@PutMapping("customer/accounts/active/{accountNumber}")
 	public String activateExistingAccount(@PathVariable(name = "accountNumber") long accountNumber) {
 		return bankService.activateAccount(accountNumber);
 	}
 
+	
+	@Operation(summary = "Delete Account")
 	@DeleteMapping("accounts/{accountNumber}")
 	public String deleteAccount(@PathVariable(name = "accountNumber") long accountNumber) {
 		return bankService.deleteAccount(accountNumber);
 	}
 
+	@Operation(summary = "Delete Customer")
 	@DeleteMapping("customer/{customerID}")
 	public String deleteCustomer(@PathVariable(name = "customerID") long customerID) {
 		return bankService.deleteCustomer(customerID);

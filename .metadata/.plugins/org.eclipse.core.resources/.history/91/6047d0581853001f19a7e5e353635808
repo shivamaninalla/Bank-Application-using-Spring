@@ -1,9 +1,0 @@
-package com.monocept.app.service;
-
-import com.monocept.app.entity.Students;
-
-public interface StudentService {
-
-	Students getAllStudents();
-
-}

@@ -68,7 +68,7 @@ public class CustomerController {
 	}
 
 	
-	@Operation(summary = "View All Accountsr")
+	@Operation(summary = "View All Accounts")
 	@GetMapping("/accounts")
 	public ResponseEntity<List<AccountResponseDto>> viewAllAccounts() {
 		return new ResponseEntity<List<AccountResponseDto>>(bankService.getAccounts(), HttpStatus.OK);
