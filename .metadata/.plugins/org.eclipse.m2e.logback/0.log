@@ -11361,3 +11361,118 @@ org.eclipse.core.runtime.CoreException: Could not resolve artifact org.webjars:s
 2024-08-12 17:15:29,291 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2024-08-12 17:15:29,309 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2024-08-12 17:15:29,318 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-12 17:17:02,900 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 17:17:02,907 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 17:17:02,914 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-12 17:17:04,294 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 17:17:04,351 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 17:17:04,360 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\24-spring-bank-application-swagger-practice\src\test\resources
+2024-08-12 17:23:23,412 [Worker-17: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.techlabs:01-spring-security:0.0.1-SNAPSHOT @ C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\23-spring-bank-application-swagger practiceee\pom.xml.
+2024-08-12 17:23:24,747 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 17:23:24,766 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 17:23:24,777 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\23-spring-bank-application-swagger practiceee\src\test\resources
+2024-08-12 17:23:26,773 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 17:23:26,775 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 17:23:26,781 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\23-spring-bank-application-swagger practiceee\src\test\resources
+2024-08-12 17:23:44,421 [Worker-20: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.techlabs:01-spring-security:0.0.1-SNAPSHOT @ C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\23-spring-bank-application-swagger\pom.xml.
+2024-08-12 17:23:45,630 [Worker-20: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 17:23:45,645 [Worker-20: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 17:23:45,652 [Worker-20: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\23-spring-bank-application-swagger\src\test\resources
+2024-08-12 17:23:47,414 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 17:23:47,417 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 17:23:47,424 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\23-spring-bank-application-swagger\src\test\resources
+2024-08-12 17:24:07,283 [Worker-20: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.techlabs:01-spring-security:0.0.1-SNAPSHOT @ C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\25-spring-contact-swagger\pom.xml.
+2024-08-12 17:24:08,623 [Worker-20: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 17:24:08,633 [Worker-20: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 17:24:08,638 [Worker-20: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\25-spring-contact-swagger\src\test\resources
+2024-08-12 17:24:10,156 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 17:24:10,159 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 17:24:10,166 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\25-spring-contact-swagger\src\test\resources
+2024-08-12 18:05:39,526 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 18:05:39,544 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:05:39,551 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:06:43,111 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 18:06:43,116 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:06:43,121 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:06:57,004 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 18:06:57,009 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:06:57,013 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:07:08,982 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 18:07:08,986 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:07:08,993 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:07:34,466 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 18:07:34,471 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:07:34,478 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:08:31,661 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 18:08:31,666 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:08:31,674 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:10:32,754 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 18:10:32,758 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:10:32,764 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:20:39,336 [Worker-27: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 18:20:39,347 [Worker-27: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:20:39,356 [Worker-27: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:22:55,608 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 18:22:55,618 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:22:55,688 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:26:27,393 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 18:26:27,401 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:26:27,407 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:27:52,432 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 18:27:52,438 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:27:52,446 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:30:46,018 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 18:30:46,024 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:30:46,031 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:33:09,359 [Worker-37: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.techlabs:01-spring-security:0.0.1-SNAPSHOT @ C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\pom.xml.
+2024-08-12 18:33:10,906 [Worker-37: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:33:10,907 [Worker-37: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:33:10,916 [Worker-37: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:33:55,070 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 18:33:55,091 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:33:55,097 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:34:20,459 [Worker-36: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2024-08-12 18:34:20,904 [Worker-36: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.techlabs:01-spring-security:0.0.1-SNAPSHOT @ C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\pom.xml.
+2024-08-12 18:34:22,371 [Worker-36: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /22-spring-contact-app/src/main/java
+2024-08-12 18:34:22,375 [Worker-36: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /22-spring-contact-app/src/main/resources
+2024-08-12 18:34:22,376 [Worker-36: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /22-spring-contact-app/src/main/resources
+2024-08-12 18:34:22,377 [Worker-36: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /22-spring-contact-app/src/test/java
+2024-08-12 18:34:22,378 [Worker-36: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /22-spring-contact-app/src/test/resources
+2024-08-12 18:34:23,400 [Worker-36: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed for 1 poms: local refresh takes 0.00 sec, refresh facades takes 1.00 sec, update config takes 0.00 sec 
+2024-08-12 18:34:24,062 [Worker-38: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 18:34:24,088 [Worker-38: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 18:34:24,098 [Worker-38: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 18:35:39,835 [Worker-3: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2024-08-12 19:01:06,118 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 19:01:06,140 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 19:01:06,148 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 19:08:24,242 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 19:08:24,262 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 19:08:24,270 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 19:18:34,046 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 19:18:34,051 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 19:18:34,055 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 19:18:41,208 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 19:18:41,213 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 19:18:41,217 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 19:19:04,816 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 19:19:04,819 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 19:19:04,822 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 19:19:54,649 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 19:19:54,653 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 19:19:54,657 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 19:20:02,985 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 19:20:02,991 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 19:20:02,996 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 19:22:01,303 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 19:22:01,312 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 19:22:01,317 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 19:23:55,947 [Worker-34: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 19:23:55,956 [Worker-34: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 19:23:55,959 [Worker-34: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 19:26:20,610 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 19:26:20,614 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 19:26:20,619 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-12 19:27:06,259 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 19:27:06,272 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 19:27:06,278 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources

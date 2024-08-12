@@ -28,7 +28,7 @@ public class AuthController {
     }
 
     // Build Login REST API
-    @PostMapping(value = {"/login", "/signin"})
+    @PostMapping(value = {"signin"})
     public ResponseEntity<JWTAuthResponse> login(@RequestBody LoginDto loginDto){
     	logger.error("In Login method");
         String token = authService.login(loginDto);
@@ -40,7 +40,7 @@ public class AuthController {
     }
 
     // Build Register REST API
-    @PostMapping(value = {"/register", "/signup"})
+    @PostMapping(value = {"signup"})
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
     	logger.trace("in register method using trace ");
     	logger.error("In Register method "+registerDto.isAdmin());

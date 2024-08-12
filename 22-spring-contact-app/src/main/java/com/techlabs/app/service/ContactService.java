@@ -12,7 +12,7 @@ import com.techlabs.app.util.PagedResponse;
 
 public interface ContactService{
 
-	List<UserResponseDto> getAllUsers();
+	PagedResponse<UserResponseDto> getAllUsers(int page, int size, String sortBy, String direction);
 
 	UserResponseDto createUser(UserRequestDto userRequestDto);
 

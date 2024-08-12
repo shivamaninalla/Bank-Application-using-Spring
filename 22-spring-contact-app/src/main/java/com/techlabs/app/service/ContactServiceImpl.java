@@ -50,11 +50,23 @@ public class ContactServiceImpl implements ContactService {
 	}
 
 	@Override
-	public List<UserResponseDto> getAllUsers() {
+	public PagedResponse<UserResponseDto> getAllUsers(int page, int size, String sortBy, String direction) {
+		Sort sort = Sort.by(sortBy);
+		if (direction.equalsIgnoreCase(Sort.Direction.DESC.name())) {
+			sort = sort.descending();
+		} else {
+			sort = sort.ascending();
+		}
+		Pageable pageable = PageRequest.of(page, size, sort);
+		Page<User> user = userRepository.findAll(pageable);
 
-		List<User> users = userRepository.findAll();
-		List<UserResponseDto> list = convertUserToUserResponseDto(users);
-		return list;
+		List<UserResponseDto> userDto = convertUserToUserResponseDto(user.getContent());
+		return new PagedResponse<>(userDto, user.getNumber(), user.getSize(), user.getTotalElements(),
+				user.getTotalPages(), user.isLast());
+
+//		List<User> user=userRepository.findAll();
+//	  return covertUserToUserResponseDto(user);
+
 	}
 
 	private List<UserResponseDto> convertUserToUserResponseDto(List<User> users) {
@@ -297,10 +309,7 @@ public class ContactServiceImpl implements ContactService {
 				contactRepository.save(c);
 				userRepository.save(user);
 				return "Contact is deleted successfully";
-			} else {
-				throw new NoUserRecordFoundException("Contact is already deleted. Contact id: " + contact_id);
-
-			}
+			} 
 
 		}
 		throw new NoUserRecordFoundException("No contact with id: " + contact_id + " found in your contacts");
