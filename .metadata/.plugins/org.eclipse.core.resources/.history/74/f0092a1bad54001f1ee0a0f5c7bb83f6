@@ -1,7 +1,0 @@
-package com.techlabs.app.service;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface BankService extends JpaRepository<Bank, Integer>{
-
-}

@@ -581,6 +581,8 @@ public class BankServiceImpl implements BankService {
 		AccountResponseDto accountResponseDTO = new AccountResponseDto();
 		if (account != null) {
 			accountResponseDTO.setAccountNumber(account.getAccountNumber());
+			accountResponseDTO.setActive(account.isActive());
+
 		}
 		return accountResponseDTO;
 	}
