@@ -68,8 +68,11 @@ public class CustomerController {
 
 	@Operation(summary = "View All Accounts")
 	@GetMapping("/accounts")
-	public ResponseEntity<List<AccountResponseDto>> viewAllAccounts() {
-		return new ResponseEntity<List<AccountResponseDto>>(bankService.getAccounts(), HttpStatus.OK);
+	public ResponseEntity<PagedResponse<AccountResponseDto>> viewAllAccounts(@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size,
+			@RequestParam(name = "sortBy", defaultValue = "accountNumber") String sortBy,
+			@RequestParam(name = "direction", defaultValue = "asc") String direction) {
+		return new ResponseEntity<PagedResponse<AccountResponseDto>>(bankService.viewAllAccounts(page,size,sortBy,direction), HttpStatus.OK);
 	}
 
 	@Operation(summary = "View Total Balance")

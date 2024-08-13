@@ -39,7 +39,6 @@ PagedResponse<CustomerResponseDto> getAllCustomers(int page, int size, String so
 
 	AccountResponseDto depositAmount(long accountNumber, double amount);
 	
-	List<AccountResponseDto> getAccounts();
 
 
 
@@ -60,4 +59,8 @@ PagedResponse<CustomerResponseDto> getAllCustomers(int page, int size, String so
 
 
 	String deleteCustomer(long customerID);
+
+
+
+	PagedResponse<AccountResponseDto> viewAllAccounts(int page, int size, String sortBy, String direction);
 }

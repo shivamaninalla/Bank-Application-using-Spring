@@ -286,9 +286,9 @@ public class BankServiceImpl implements BankService {
 		TransactionResponseDto transactionResponseDto = new TransactionResponseDto();
 		transactionResponseDto.setAmount(save.getAmount());
 		transactionResponseDto.setId(save.getId());
-		transactionResponseDto.setSenderAccount(convertAccountTransactionToAccountResponseDto(save.getSenderAccount()));
+		transactionResponseDto.setSenderAccount(convertAccounttoAccountResponseDto(save.getSenderAccount()));
 		transactionResponseDto
-				.setReceiverAccount(convertAccountTransactionToAccountResponseDto(save.getReceiverAccount()));
+				.setReceiverAccount(convertAccounttoAccountResponseDto(save.getReceiverAccount()));
 		transactionResponseDto.setTransactionDate(save.getTransactionDate());
 		transactionResponseDto.setTransactionType(save.getTransactionType());
 
@@ -509,11 +509,11 @@ public class BankServiceImpl implements BankService {
 			responseDto.setAmount(transaction.getAmount());
 			if (transaction.getReceiverAccount() != null) {
 				responseDto.setReceiverAccount(
-						convertAccountTransactionToAccountResponseDto(transaction.getReceiverAccount()));
+						convertAccounttoAccountResponseDto(transaction.getReceiverAccount()));
 			}
 			if (transaction.getSenderAccount() != null) {
 				responseDto.setSenderAccount(
-						convertAccountTransactionToAccountResponseDto(transaction.getSenderAccount()));
+						convertAccounttoAccountResponseDto(transaction.getSenderAccount()));
 			}
 			responseDto.setId(transaction.getId());
 			responseDto.setTransactionDate(transaction.getTransactionDate());
@@ -571,27 +571,28 @@ public class BankServiceImpl implements BankService {
 
 	}
 
-	@Override
-	public List<AccountResponseDto> getAccounts() {
-		User user = userRepository.findByEmail(getEmailFromSecurityContext()).orElse(null);
-		return convertAccounttoAccountResponseDto(user.getCustomer().getAccounts());
-	}
-
-	private AccountResponseDto convertAccountTransactionToAccountResponseDto(Account account) {
-		AccountResponseDto accountResponseDTO = new AccountResponseDto();
-		if (account != null) {
-			accountResponseDTO.setAccountNumber(account.getAccountNumber());
-			accountResponseDTO.setActive(account.isActive());
-
-		}
-		return accountResponseDTO;
-	}
+//	@Override
+//	public List<AccountResponseDto> getAccounts() {
+//		User user = userRepository.findByEmail(getEmailFromSecurityContext()).orElse(null);
+//		return convertAccounttoAccountResponseDto(user.getCustomer().getAccounts());
+//	}
+//
+//	private AccountResponseDto convertAccountTransactionToAccountResponseDto(Account account) {
+//		AccountResponseDto accountResponseDTO = new AccountResponseDto();
+//		if (account != null) {
+//			accountResponseDTO.setAccountNumber(account.getAccountNumber());
+//			accountResponseDTO.setActive(account.isActive());
+//
+//		}
+//		return accountResponseDTO;
+//	}
 
 	@Override
 	public String deleteCustomer(long customerID) {
 		Customer customer = customerRepository.findById(customerID).orElse(null);
 		if (customer == null) {
 			throw new NoRecordFoundException("Customer not found with the id " + customerID);
+			
 		}
 		if (!customer.isActive()) {
 			throw new NoRecordFoundException("Customer is already deleted");
@@ -715,5 +716,24 @@ private void sendMailToTheUsers(User senderUser, User receiverUser, Customer sen
 		sendEmail(receiverUser.getEmail(),creditedsubject,creditedBody);
 		
 	}
+
+@Override
+public PagedResponse<AccountResponseDto> viewAllAccounts(int page, int size, String sortBy, String direction) 
+{
+	Sort sort = Sort.by(sortBy);
+	if (direction.equalsIgnoreCase(Sort.Direction.DESC.name())) {
+		sort.descending();
+	} else {
+		sort.ascending();
+	}
+   Pageable pageable = PageRequest.of(page, size, sort);
+   
+	
+	User user = userRepository.findByEmail(getEmailFromSecurityContext()).orElse(null);
+	Page<Account> accounts = accountRepository.findByCustomer(user.getCustomer(),pageable);
+	
+	return new PagedResponse<AccountResponseDto>(convertAccounttoAccountResponseDto(accounts.getContent()),accounts.getNumber(),accounts.getSize(),accounts.getTotalElements(),accounts.getTotalPages(),accounts.isLast());
+	
+}
 
 }

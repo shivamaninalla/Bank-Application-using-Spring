@@ -21,7 +21,6 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long> {
 
 	
 	
-	//List<Transaction> findByTransactionDateBetween(LocalDateTime fromDate, LocalDateTime toDate);
 
 
 

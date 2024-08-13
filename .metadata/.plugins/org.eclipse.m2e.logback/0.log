@@ -11476,3 +11476,54 @@ org.eclipse.core.runtime.CoreException: Could not resolve artifact org.webjars:s
 2024-08-12 19:27:06,259 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2024-08-12 19:27:06,272 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2024-08-12 19:27:06,278 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-12 19:29:52,983 [Worker-36: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-12 19:29:52,987 [Worker-36: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-08-12 19:29:52,991 [Worker-36: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\22-spring-contact-app\src\test\resources
+2024-08-13 12:37:45,737 [Worker-55: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 12:37:45,763 [Worker-55: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 12:37:45,770 [Worker-55: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 12:42:54,350 [Worker-57: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 12:42:54,357 [Worker-57: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 12:42:54,362 [Worker-57: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 13:55:44,387 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 13:55:44,403 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 13:55:44,411 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 13:55:51,620 [Worker-57: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 13:55:51,627 [Worker-57: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 13:55:51,633 [Worker-57: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 13:56:07,605 [Worker-71: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 13:56:07,610 [Worker-71: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 13:56:07,615 [Worker-71: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 13:56:50,146 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 13:56:50,153 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 13:56:50,162 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 13:57:31,858 [Worker-57: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 13:57:31,863 [Worker-57: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 13:57:31,871 [Worker-57: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 13:59:27,628 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 13:59:27,634 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 13:59:27,640 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 14:00:23,190 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:00:23,194 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:00:23,201 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 14:00:36,692 [Worker-72: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:00:36,697 [Worker-72: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:00:36,702 [Worker-72: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 14:02:37,161 [Worker-72: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:02:37,174 [Worker-72: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:02:37,182 [Worker-72: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 14:03:03,288 [Worker-72: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:03:03,295 [Worker-72: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:03:03,303 [Worker-72: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 14:03:56,835 [Worker-75: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:03:56,842 [Worker-75: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:03:56,851 [Worker-75: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 14:04:05,902 [Worker-72: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:04:05,907 [Worker-72: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:04:05,913 [Worker-72: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 14:04:13,686 [Worker-69: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:04:13,692 [Worker-69: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:04:13,698 [Worker-69: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
+2024-08-13 14:04:41,738 [Worker-76: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:04:41,744 [Worker-76: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-08-13 14:04:41,752 [Worker-76: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\shiva\Documents\workspace-spring-tool-suite-4-4.23.1.RELEASE\21-spring-bank-application-final\src\test\resources
