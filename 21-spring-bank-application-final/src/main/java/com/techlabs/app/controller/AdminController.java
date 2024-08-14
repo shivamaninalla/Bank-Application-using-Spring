@@ -92,28 +92,28 @@ public class AdminController {
 	
 	@Operation(summary = "Activate Existing Customer")
 	@PutMapping("/active/{customerID}")
-	public String activateExistingCustomer(@PathVariable(name = "customerID") long customerID) {
-		return bankService.activateCustomer(customerID);
+	public ResponseEntity<String> activateExistingCustomer(@PathVariable(name = "customerID") long customerID) {
+		return new ResponseEntity<String>(bankService.activateCustomer(customerID),HttpStatus.OK);
 	}
 
 	
 	@Operation(summary = "Activate Existing Account")
 	@PutMapping("customer/accounts/active/{accountNumber}")
-	public String activateExistingAccount(@PathVariable(name = "accountNumber") long accountNumber) {
-		return bankService.activateAccount(accountNumber);
+	public ResponseEntity<String> activateExistingAccount(@PathVariable(name = "accountNumber") long accountNumber) {
+		return new ResponseEntity<String>(bankService.activateAccount(accountNumber),HttpStatus.OK);
 	}
 
 	
 	@Operation(summary = "Delete Account")
 	@DeleteMapping("accounts/{accountNumber}")
-	public String deleteAccount(@PathVariable(name = "accountNumber") long accountNumber) {
-		return bankService.deleteAccount(accountNumber);
+	public ResponseEntity<String> deleteAccount(@PathVariable(name = "accountNumber") long accountNumber) {
+		return new ResponseEntity<String>(bankService.deleteAccount(accountNumber),HttpStatus.OK);
 	}
 
 	@Operation(summary = "Delete Customer")
 	@DeleteMapping("customer/{customerID}")
-	public String deleteCustomer(@PathVariable(name = "customerID") long customerID) {
-		return bankService.deleteCustomer(customerID);
+	public ResponseEntity<String> deleteCustomer(@PathVariable(name = "customerID") long customerID) {
+		return new ResponseEntity<String>(bankService.deleteCustomer(customerID),HttpStatus.OK);
 	}
 
 }

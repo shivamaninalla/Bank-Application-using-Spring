@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -49,11 +51,12 @@ import com.techlabs.app.util.PagedResponse;
 
 import jakarta.mail.MessagingException;
 
-
 @Service
 public class BankServiceImpl implements BankService {
-	CustomerRepository customerRepository;
 
+	private static final Logger logger = LoggerFactory.getLogger(BankService.class);
+
+	CustomerRepository customerRepository;
 	AccountRepository accountRepository;
 	BankRepository bankRepository;
 	TransactionRepository transactionRepository;
@@ -62,10 +65,10 @@ public class BankServiceImpl implements BankService {
 
 	@Autowired
 	private JavaMailSender javaMailSender;
-	
+
 	@Autowired
-	private PDFUtil pdfUtil=new PDFUtil();
-	
+	private PDFUtil pdfUtil = new PDFUtil();
+
 	@Autowired
 	private EmailUtil emailUtil;
 
@@ -135,68 +138,64 @@ public class BankServiceImpl implements BankService {
 		return accountResponseDto;
 	}
 
-
-
 	@Override
 	public CustomerResponseDto findCustomerByid(long id) {
 		Customer customer = customerRepository.findById(id).orElse(null);
 		if (customer == null) {
-			throw new CustomerNotFoundException("customer not found with id: " + id);
+			String message = "Customer not found with id: " + id;
+			logger.error(message);
+			throw new CustomerNotFoundException(message);
 		} else {
 			return convertCustomerToCustomerResponseDto(customer);
 		}
 	}
 
 	@Override
-	public CustomerResponseDto addAccount(long cid,int bid) {
-		
-		 Account account = new Account();
-		 Bank bank = bankRepository.findById(bid).orElse(null);
-		
-		 
-		 if(bank != null) {
-			 Customer customer = customerRepository.findById(cid).orElse(null);
-			 if(!customer.isActive()) {
-					throw new NoRecordFoundException("Customer is not activated "+customer.getCustomer_id());
-				}
-			 
-			 if(customer != null){
-				 
-				
-				 account.setBalance(1000);
-				 account.setBank(bank);
-				 account.setCustomer(customer);
-				 
-				 customer.addbankAccount(account);
-				 double total_salary=1000;
-				 if(accountRepository.getTotalBalance(customer)!=0) {
-					 total_salary+=accountRepository.getTotalBalance(customer);
-				 }
-				 customer.setTotalBalance(total_salary);
-				 Customer save = customerRepository.save(customer);
-				 User user = customer.getUser();
-				 String subject = "Your Account Has Been Successfully Created at SBI !";
-				 		String emailBody = "Dear " + customer.getFirstName() + " " + customer.getLastName() + ",\n\n"
-				 		    + "We are pleased to inform you that your account has been successfully created with us!\n\n"
-				 		    + "Your Customer ID is " + customer.getCustomer_id() + ". You can view all the details of your account by logging into our application and sending a request to get customer details by your ID.\n\n"
-				 		    + "If you need any assistance or have any questions, our support team is ready to help. We are committed to providing you with the best banking experience.\n\n"
-				 		    + "Thank you for choosing SBI. We look forward to supporting your financial needs.\n\n"
-				 		    + "Best regards,\n"
-				 		    + "Customer Relations Team\n"
-				 		    + "SBI";
+	public CustomerResponseDto addAccount(long cid, int bid) {
 
-				 		sendEmail(user.getEmail(), subject,emailBody);
-				 return convertCustomerToCustomerResponseDto(save);
-				 
-			 }
-			 else {
-				 throw new CustomerNotFoundException("Customer with this id "+cid+" not found");
-			 }
-		 }
+		Account account = new Account();
+		Bank bank = bankRepository.findById(bid).orElse(null);
+
+		if (bank != null) {
+			Customer customer = customerRepository.findById(cid).orElse(null);
+			if (!customer.isActive()) {
+				String message = "Customer is not activated " + customer.getCustomer_id();
+				logger.error(message);
+				throw new NoRecordFoundException(message);
+			}
+
+			if (customer != null) {
+
+				account.setBalance(1000);
+				account.setBank(bank);
+				account.setCustomer(customer);
+
+				customer.addbankAccount(account);
+				double total_salary = 1000;
+				if (accountRepository.getTotalBalance(customer) != 0) {
+					total_salary += accountRepository.getTotalBalance(customer);
+				}
+				customer.setTotalBalance(total_salary);
+				Customer save = customerRepository.save(customer);
+				User user = customer.getUser();
+				String subject = "Your Account Has Been Successfully Created at SBI !";
+				String emailBody = "Dear " + customer.getFirstName() + " " + customer.getLastName() + ",\n\n"
+						+ "We are pleased to inform you that your account has been successfully created with us!\n\n"
+						+ "Your Customer ID is " + customer.getCustomer_id()
+						+ ". You can view all the details of your account by logging into our application and sending a request to get customer details by your ID.\n\n"
+						+ "If you need any assistance or have any questions, our support team is ready to help. We are committed to providing you with the best banking experience.\n\n"
+						+ "Thank you for choosing SBI. We look forward to supporting your financial needs.\n\n"
+						+ "Best regards,\n" + "Customer Relations Team\n" + "SBI";
+
+				sendEmail(user.getEmail(), subject, emailBody);
+				return convertCustomerToCustomerResponseDto(save);
+
+			} else {
+				throw new CustomerNotFoundException("Customer with this id " + cid + " not found");
+			}
+		}
 		return null;
-		 
-	
-	
+
 	}
 
 	private Account convertAcountResponseDtoToAccount(AccountRequestDto accountRequestDto) {
@@ -230,30 +229,42 @@ public class BankServiceImpl implements BankService {
 	@Override
 	public TransactionResponseDto doTransaction(long senderAccountNumber, long receiverAccountNumber, double amount) {
 		Optional<User> user = userRepository.findByEmail(getEmailFromSecurityContext());
-		Customer customer=user.get().getCustomer();
+		Customer customer = user.get().getCustomer();
 		List<Account> accounts = user.get().getCustomer().getAccounts();
-		 if(!customer.isActive()) {
-				throw new NoRecordFoundException("Customer is not activated "+customer.getCustomer_id());
-			}
+		if (!customer.isActive()) {
+			String message = "Customer is not activated " + customer.getCustomer_id();
+			logger.error(message);
+			throw new NoRecordFoundException(message);
+		}
 		for (Account account : accounts) {
 			if (account.getAccountNumber() == senderAccountNumber) {
 				Account senderAccount = accountRepository.findById(senderAccountNumber).orElse(null);
 				Account receiverAccount = accountRepository.findById(receiverAccountNumber).orElse(null);
-				if(!senderAccount.isActive()) {
-					throw new NoRecordFoundException("Account is not activated "+senderAccount.getAccountNumber());
-					}
-				if(!receiverAccount.isActive()) {
-					throw new NoRecordFoundException("Account is not activated "+receiverAccount.getAccountNumber());
-					}
+				if (!senderAccount.isActive()) {
+					String message = "Account is not activated " + senderAccount.getAccountNumber();
+					logger.error(message);
+					throw new NoRecordFoundException(message);
+				}
+				if (!receiverAccount.isActive()) {
+					String message = "Account is not activated " + receiverAccount.getAccountNumber();
+					logger.error(message);
+					throw new NoRecordFoundException(message);
+				}
 				if (senderAccount == null || receiverAccount == null) {
-					throw new NoRecordFoundException("Please check the sender account number " + senderAccountNumber
-							+ " and receiver account number " + receiverAccountNumber);
+					String message = "Please check the sender account number " + senderAccountNumber
+							+ " and receiver account number " + receiverAccountNumber;
+					logger.error(message);
+					throw new NoRecordFoundException(message);
 				}
 				if (senderAccount.equals(receiverAccount)) {
-					throw new NoRecordFoundException("self transfer to the same account number not possible");
+					String message = "self transfer to the same account number not possible";
+					logger.error(message);
+					throw new NoRecordFoundException(message);
 				}
 				if (senderAccount.getBalance() < amount) {
-					throw new NoRecordFoundException("Insufficient Funds please check the balance again");
+					String message = "Insufficient Funds please check the balance again";
+					logger.error(message);
+					throw new NoRecordFoundException(message);
 				}
 				senderAccount.setBalance(senderAccount.getBalance() - amount);
 				receiverAccount.setBalance(receiverAccount.getBalance() + amount);
@@ -271,9 +282,10 @@ public class BankServiceImpl implements BankService {
 				transaction.setSenderAccount(senderAccount);
 				transaction.setReceiverAccount(receiverAccount);
 				transaction.setTransactionType(TransactionType.Transfer);
-				User senderUser=senderCustomer.getUser();
-				User receiverUser=receiverCustomer.getUser();
-				sendMailToTheUsers(senderUser,receiverUser,senderCustomer,senderAccountNumber,transaction,receiverCustomer,receiverAccountNumber);
+				User senderUser = senderCustomer.getUser();
+				User receiverUser = receiverCustomer.getUser();
+				sendMailToTheUsers(senderUser, receiverUser, senderCustomer, senderAccountNumber, transaction,
+						receiverCustomer, receiverAccountNumber);
 				return convertTransactiontoTransactionDto(transactionRepository.save(transaction));
 			}
 		}
@@ -287,8 +299,7 @@ public class BankServiceImpl implements BankService {
 		transactionResponseDto.setAmount(save.getAmount());
 		transactionResponseDto.setId(save.getId());
 		transactionResponseDto.setSenderAccount(convertAccounttoAccountResponseDto(save.getSenderAccount()));
-		transactionResponseDto
-				.setReceiverAccount(convertAccounttoAccountResponseDto(save.getReceiverAccount()));
+		transactionResponseDto.setReceiverAccount(convertAccounttoAccountResponseDto(save.getReceiverAccount()));
 		transactionResponseDto.setTransactionDate(save.getTransactionDate());
 		transactionResponseDto.setTransactionType(save.getTransactionType());
 
@@ -358,24 +369,25 @@ public class BankServiceImpl implements BankService {
 	public UserResponseDto createCustomer(CustomerRequestDto customerRequestDto, long userID) {
 		User user = userRepository.findById(userID).orElse(null);
 		if (user == null) {
-			throw new NoRecordFoundException("User not found with the following id " + userID);
+			String message = "User not found with the following id " + userID;
+			logger.error(message);
+			throw new NoRecordFoundException(message);
 		}
 		if (user.getCustomer() != null) {
-			throw new NoRecordFoundException("Customer already assigned cannot create another customer to the user");
+			String message = "Customer already assigned cannot create another customer to the user";
+			logger.error(message);
+			throw new NoRecordFoundException(message);
 		}
 		Customer customer = convertCustomerRequestToCustomer(customerRequestDto);
 		user.setCustomer(customer);
 		String subject = "Welcome to SBI! Your Customer ID Has Been Successfully Created";
 		String emailBody = "Dear [Customer Name],\n\n"
-			    + "Welcome to SBI! We are excited to have you join our community.\n\n"
-			    + "We are pleased to confirm that your Customer ID has been successfully created. Our team is now working on completing the setup of your account. You can expect your account to be fully operational within a few days.\n\n"
-			    + "While you wait, we encourage you to familiarize yourself with the range of services we offer. We are committed to providing you with an exceptional banking experience.\n\n"
-			    + "Should you have any questions or require assistance, please feel free to reach out to our customer service team. We are here to support you at every step.\n\n"
-			    + "Thank you for choosing SBI. We look forward to assisting you in achieving your financial goals.\n\n"
-			    + "Sincerely,\n"
-			    + "[Your Name]\n"
-			    + "Customer Relations Team\n"
-			    + "SBI";
+				+ "Welcome to SBI! We are excited to have you join our community.\n\n"
+				+ "We are pleased to confirm that your Customer ID has been successfully created. Our team is now working on completing the setup of your account. You can expect your account to be fully operational within a few days.\n\n"
+				+ "While you wait, we encourage you to familiarize yourself with the range of services we offer. We are committed to providing you with an exceptional banking experience.\n\n"
+				+ "Should you have any questions or require assistance, please feel free to reach out to our customer service team. We are here to support you at every step.\n\n"
+				+ "Thank you for choosing SBI. We look forward to assisting you in achieving your financial goals.\n\n"
+				+ "Sincerely,\n" + "[Your Name]\n" + "Customer Relations Team\n" + "SBI";
 		sendEmail(user.getEmail(), subject, emailBody);
 		return convertUserToUserDto(userRepository.save(user));
 	}
@@ -420,7 +432,9 @@ public class BankServiceImpl implements BankService {
 	public String updateProfile(ProfileRequestDto profileRequestDto) {
 		User user = userRepository.findByEmail(getEmailFromSecurityContext()).orElse(null);
 		if (user.getCustomer() == null) {
-			throw new NoRecordFoundException("Cannot update the customer details still you havn't have customer id");
+			String message = "Cannot update the customer details still you havn't have customer id";
+			logger.error(message);
+			throw new NoRecordFoundException(message);
 		}
 		Customer customer = user.getCustomer();
 		if (profileRequestDto.getEmail() != null && !profileRequestDto.getEmail().isEmpty()
@@ -456,7 +470,8 @@ public class BankServiceImpl implements BankService {
 
 	@Override
 	public PagedResponse<TransactionResponseDto> viewPassbook(long accountNumber, LocalDateTime from, LocalDateTime to,
-			int page, int size, String sortBy, String direction) throws DocumentException, IOException, MessagingException {
+			int page, int size, String sortBy, String direction)
+			throws DocumentException, IOException, MessagingException {
 		Sort sort = Sort.by(sortBy);
 		if (direction.equalsIgnoreCase(Sort.Direction.DESC.name())) {
 			sort.descending();
@@ -467,7 +482,9 @@ public class BankServiceImpl implements BankService {
 		String email = getEmailFromSecurityContext();
 		Optional<User> user = userRepository.findByEmail(email);
 		if (user.get().getCustomer() == null) {
-			throw new NoRecordFoundException("still you havn't have customer id");
+			String message = "still you havn't have customer id";
+			logger.error(message);
+			throw new NoRecordFoundException(message);
 		}
 		List<Account> accounts = user.get().getCustomer().getAccounts();
 		for (Account acc : accounts) {
@@ -486,9 +503,9 @@ public class BankServiceImpl implements BankService {
 				mailStructure.setToEmail(user.get().getEmail());
 				mailStructure.setEmailBody(passbookBody);
 				mailStructure.setSubject(passbookSubject);
-				List<TransactionResponseDto> responseDTO = convertTransactiontoTransactionDto(pagedResponse.getContent(),accountNumber);
-				byte[] passbookPdf = pdfUtil
-						.generatePassbookPdf(user,responseDTO);
+				List<TransactionResponseDto> responseDTO = convertTransactiontoTransactionDto(
+						pagedResponse.getContent(), accountNumber);
+				byte[] passbookPdf = pdfUtil.generatePassbookPdf(user, responseDTO);
 				emailUtil.sendEmailWithAttachment(mailStructure, passbookPdf);
 
 				return new PagedResponse<TransactionResponseDto>(
@@ -497,7 +514,9 @@ public class BankServiceImpl implements BankService {
 						pagedResponse.getTotalPages(), pagedResponse.isLast());
 			}
 		}
-		throw new NoRecordFoundException("Please give valid account number");
+		String message = "Please give valid account number";
+		logger.error(message);
+		throw new NoRecordFoundException(message);
 
 	}
 
@@ -508,12 +527,10 @@ public class BankServiceImpl implements BankService {
 			TransactionResponseDto responseDto = new TransactionResponseDto();
 			responseDto.setAmount(transaction.getAmount());
 			if (transaction.getReceiverAccount() != null) {
-				responseDto.setReceiverAccount(
-						convertAccounttoAccountResponseDto(transaction.getReceiverAccount()));
+				responseDto.setReceiverAccount(convertAccounttoAccountResponseDto(transaction.getReceiverAccount()));
 			}
 			if (transaction.getSenderAccount() != null) {
-				responseDto.setSenderAccount(
-						convertAccounttoAccountResponseDto(transaction.getSenderAccount()));
+				responseDto.setSenderAccount(convertAccounttoAccountResponseDto(transaction.getSenderAccount()));
 			}
 			responseDto.setId(transaction.getId());
 			responseDto.setTransactionDate(transaction.getTransactionDate());
@@ -534,12 +551,16 @@ public class BankServiceImpl implements BankService {
 		List<Account> accounts = user.getCustomer().getAccounts();
 		Customer customer = user.getCustomer();
 		if (customer == null) {
-			throw new NoRecordFoundException("Customer not associated with the user");
+			String message = "Customer not associated with the user";
+			logger.error(message);
+			throw new NoRecordFoundException(message);
 		}
-		if(!customer.isActive()) {
-			throw new NoRecordFoundException("Customer is not activated and his id is "+customer.getCustomer_id());
+		if (!customer.isActive()) {
+			String message = "Customer is not activated and his id is " + customer.getCustomer_id();
+			logger.error(message);
+			throw new NoRecordFoundException(message);
 		}
-		
+
 		for (Account account : accounts) {
 			if (account.getAccountNumber() == accountNumber && isAccountActive(account)) {
 				account.setBalance(account.getBalance() + amount);
@@ -554,14 +575,13 @@ public class BankServiceImpl implements BankService {
 				transactionRepository.save(transaction);
 				String subject = "Notification: Your Account Has Been Credited at SBI!";
 				String emailBody = "Dear " + customer.getFirstName() + " " + customer.getLastName() + ",\n\n"
-				    + "We are pleased to notify you that your account has been credited with an amount of " + transaction.getAmount() + " on " + LocalDateTime.now() + ".\n\n"
-				    + "Account Number: ######" +accountNumber+ "\n\n"
-				    + "You can view the details of this transaction by logging into our application and checking your account transactions.\n\n"
-				    + "If you have any questions or need further assistance, please contact our support team. We are here to ensure you have the best banking experience.\n\n"
-				    + "Thank you for banking with Spring Unity Bank. We look forward to continuing to support your financial needs.\n\n"
-				    + "Best regards,\n"
-				    + "Customer Relations Team\n"
-				    + "SBI";
+						+ "We are pleased to notify you that your account has been credited with an amount of "
+						+ transaction.getAmount() + " on " + LocalDateTime.now() + ".\n\n" + "Account Number: ######"
+						+ accountNumber + "\n\n"
+						+ "You can view the details of this transaction by logging into our application and checking your account transactions.\n\n"
+						+ "If you have any questions or need further assistance, please contact our support team. We are here to ensure you have the best banking experience.\n\n"
+						+ "Thank you for banking with Spring Unity Bank. We look forward to continuing to support your financial needs.\n\n"
+						+ "Best regards,\n" + "Customer Relations Team\n" + "SBI";
 
 				sendEmail(user.getEmail(), subject, emailBody);
 				return convertAccounttoAccountResponseDto(account);
@@ -571,31 +591,19 @@ public class BankServiceImpl implements BankService {
 
 	}
 
-//	@Override
-//	public List<AccountResponseDto> getAccounts() {
-//		User user = userRepository.findByEmail(getEmailFromSecurityContext()).orElse(null);
-//		return convertAccounttoAccountResponseDto(user.getCustomer().getAccounts());
-//	}
-//
-//	private AccountResponseDto convertAccountTransactionToAccountResponseDto(Account account) {
-//		AccountResponseDto accountResponseDTO = new AccountResponseDto();
-//		if (account != null) {
-//			accountResponseDTO.setAccountNumber(account.getAccountNumber());
-//			accountResponseDTO.setActive(account.isActive());
-//
-//		}
-//		return accountResponseDTO;
-//	}
-
 	@Override
 	public String deleteCustomer(long customerID) {
 		Customer customer = customerRepository.findById(customerID).orElse(null);
 		if (customer == null) {
-			throw new NoRecordFoundException("Customer not found with the id " + customerID);
-			
+			String message ="Customer not found with the id " + customerID;
+			logger.error(message);
+			throw new NoRecordFoundException(message);
+
 		}
 		if (!customer.isActive()) {
-			throw new NoRecordFoundException("Customer is already deleted");
+			String message ="Customer is already deleted";
+					logger.error(message);
+			throw new NoRecordFoundException(message);
 		}
 		customer.setActive(false);
 		List<Account> accounts = customer.getAccounts();
@@ -610,10 +618,14 @@ public class BankServiceImpl implements BankService {
 	public String activateCustomer(long customerID) {
 		Customer customer = customerRepository.findById(customerID).orElse(null);
 		if (customer == null) {
-			throw new NoRecordFoundException("Customer not found with the id " + customerID);
+			String message ="Customer not found with the id " + customerID;
+			logger.error(message);
+			throw new NoRecordFoundException(message);
 		}
 		if (customer.isActive()) {
-			throw new NoRecordFoundException("Customer is already active");
+			String message ="Customer is already active";
+			logger.error(message);
+			throw new NoRecordFoundException(message);
 		}
 		customer.setActive(true);
 		customerRepository.save(customer);
@@ -626,53 +638,62 @@ public class BankServiceImpl implements BankService {
 		Customer customer = account.getCustomer();
 		User user2 = customer.getUser();
 		String email = user2.getEmail();
-		//Account account = accountRepository.findById(accountNumber).orElse(null);
+		// Account account = accountRepository.findById(accountNumber).orElse(null);
 		if (account == null) {
-			throw new NoRecordFoundException("Account not found with the account number " + accountNumber);
+			String message ="Account not found with the account number " + accountNumber;
+			logger.error(message);
+			throw new NoRecordFoundException(message);
 		}
 		if (!account.isActive()) {
-			throw new NoRecordFoundException("Account is already deleted");
+			String message ="Account is already deleted";
+			logger.error(message);
+			throw new NoRecordFoundException(message);
 		}
 		account.setActive(false);
 		accountRepository.save(account);
-		String subject="Account Deactivation";
-		String emailBody="Your account has been deactivated. Account Number: "+accountNumber;
+		String subject = "Account Deactivation";
+		String emailBody = "Your account has been deactivated. Account Number: " + accountNumber;
 		sendEmail(email, subject, emailBody);
 		return "Account deleted successfully";
 	}
 
 	@Override
 	public String activateAccount(long accountNumber) {
-	
 
 		Account account = accountRepository.findById(accountNumber).orElse(null);
 		Customer customer = account.getCustomer();
 		User user2 = customer.getUser();
 		String email = user2.getEmail();
-		
+
 		if (account == null) {
-			throw new NoRecordFoundException("Account not found with the account number " + accountNumber);
+String message="Account not found with the account number " + accountNumber;
+logger.error(message);
+			throw new NoRecordFoundException(message);
 		}
 		if (account.isActive()) {
-			throw new NoRecordFoundException("Account is already active");
+			String message="Account is already active";
+			logger.error(message);
+			throw new NoRecordFoundException(message);
 		}
-		if(!account.getCustomer().isActive()) {
-			throw new NoRecordFoundException("Customer is not activated customerId: "+account.getCustomer().getCustomer_id());
+		if (!account.getCustomer().isActive()) {
+			String message="Customer is not activated customerId: " + account.getCustomer().getCustomer_id();
+			logger.error(message);
+			throw new NoRecordFoundException(message
+					);
 		}
 		account.setActive(true);
 		accountRepository.save(account);
-		String subject="Account Activation";
-		String emailBody="Your account has been activated. Account Number: "+accountNumber;
+		String subject = "Account Activation";
+		String emailBody = "Your account has been activated. Account Number: " + accountNumber;
 		sendEmail(email, subject, emailBody);
 
-		
 		return "Account activated successfully";
 	}
 
 	@Override
 	public AccountResponseDto viewBalance(long accountNumber) {
 		String email = getEmailFromSecurityContext();
-		
+
 		Optional<User> user = userRepository.findByEmail(email);
 		List<Account> accounts = user.get().getCustomer().getAccounts();
 		for (Account account : accounts) {
@@ -680,60 +701,63 @@ public class BankServiceImpl implements BankService {
 				return convertAccounttoAccountResponseDto(account);
 			}
 		}
-		throw new NoRecordFoundException("Please check the account number");
+		String message="Please check the account number";
+		logger.error(message);
+		throw new NoRecordFoundException(message);
 	}
 
 	private boolean isAccountActive(Account account) {
 		if (!account.isActive()) {
-			throw new NoRecordFoundException("Your account is not activated");
+			String message="Your account is not activated";
+			logger.error(message);
+			throw new NoRecordFoundException(message);
 		}
 		return true;
 	}
-	
-private void sendMailToTheUsers(User senderUser, User receiverUser, Customer senderCustomer, long senderAccountNumber, Transaction transaction, Customer receiverCustomer, long receiverAccountNumber) {
-		
+
+	private void sendMailToTheUsers(User senderUser, User receiverUser, Customer senderCustomer,
+			long senderAccountNumber, Transaction transaction, Customer receiverCustomer, long receiverAccountNumber) {
+
 		String debitedsubject = "Notification: Your Account Has Been Debited at State Bank of India !";
 		String debitedBody = "Dear " + senderCustomer.getFirstName() + " " + senderCustomer.getLastName() + ",\n\n"
-		    + "We want to inform you that your account has been debited by an amount of " + transaction.getAmount() + " on " + transaction.getTransactionDate() + ".\n\n"
-		    + "Account Number: ######" + senderAccountNumber + "\n\n"
-		    + "If you did not authorize this transaction or have any concerns about it, please contact our support team immediately. We are here to assist you and ensure your account's security.\n\n"
-		    + "You can view the details of this transaction by logging into our application and checking your account transactions.\n\n"
-		    + "Thank you for banking with Unity Bank. We are dedicated to supporting your financial needs.\n\n"
-		    + "Best regards,\n"
-		    + "Customer Relations Team\n"
-		    + "SBI";
+				+ "We want to inform you that your account has been debited by an amount of " + transaction.getAmount()
+				+ " on " + transaction.getTransactionDate() + ".\n\n" + "Account Number: ######" + senderAccountNumber
+				+ "\n\n"
+				+ "If you did not authorize this transaction or have any concerns about it, please contact our support team immediately. We are here to assist you and ensure your account's security.\n\n"
+				+ "You can view the details of this transaction by logging into our application and checking your account transactions.\n\n"
+				+ "Thank you for banking with Unity Bank. We are dedicated to supporting your financial needs.\n\n"
+				+ "Best regards,\n" + "Customer Relations Team\n" + "SBI";
 		sendEmail(senderUser.getEmail(), debitedsubject, debitedBody);
 		String creditedsubject = "Notification: Your Account Has Been Credited at SBI!";
 		String creditedBody = "Dear " + receiverCustomer.getFirstName() + " " + receiverCustomer.getLastName() + ",\n\n"
-		    + "We are pleased to notify you that your account has been credited with an amount of " + transaction.getAmount() + " on " + transaction.getTransactionDate() + ".\n\n"
-		    + "Account Number: ######" + receiverAccountNumber + "\n\n"
-		    + "You can view the details of this transaction by logging into our application and checking your account transactions.\n\n"
-		    + "If you have any questions or need further assistance, please contact our support team. We are here to ensure you have the best banking experience.\n\n"
-		    + "Thank you for banking with SBI. We look forward to continuing to support your financial needs.\n\n"
-		    + "Best regards,\n"
-		    + "Customer Relations Team\n"
-		    + "SBI";
-		sendEmail(receiverUser.getEmail(),creditedsubject,creditedBody);
-		
+				+ "We are pleased to notify you that your account has been credited with an amount of "
+				+ transaction.getAmount() + " on " + transaction.getTransactionDate() + ".\n\n"
+				+ "Account Number: ######" + receiverAccountNumber + "\n\n"
+				+ "You can view the details of this transaction by logging into our application and checking your account transactions.\n\n"
+				+ "If you have any questions or need further assistance, please contact our support team. We are here to ensure you have the best banking experience.\n\n"
+				+ "Thank you for banking with SBI. We look forward to continuing to support your financial needs.\n\n"
+				+ "Best regards,\n" + "Customer Relations Team\n" + "SBI";
+		sendEmail(receiverUser.getEmail(), creditedsubject, creditedBody);
+
 	}
 
-@Override
-public PagedResponse<AccountResponseDto> viewAllAccounts(int page, int size, String sortBy, String direction) 
-{
-	Sort sort = Sort.by(sortBy);
-	if (direction.equalsIgnoreCase(Sort.Direction.DESC.name())) {
-		sort.descending();
-	} else {
-		sort.ascending();
+	@Override
+	public PagedResponse<AccountResponseDto> viewAllAccounts(int page, int size, String sortBy, String direction) {
+		Sort sort = Sort.by(sortBy);
+		if (direction.equalsIgnoreCase(Sort.Direction.DESC.name())) {
+			sort.descending();
+		} else {
+			sort.ascending();
+		}
+		Pageable pageable = PageRequest.of(page, size, sort);
+
+		User user = userRepository.findByEmail(getEmailFromSecurityContext()).orElse(null);
+		Page<Account> accounts = accountRepository.findByCustomer(user.getCustomer(), pageable);
+
+		return new PagedResponse<AccountResponseDto>(convertAccounttoAccountResponseDto(accounts.getContent()),
+				accounts.getNumber(), accounts.getSize(), accounts.getTotalElements(), accounts.getTotalPages(),
+				accounts.isLast());
+
 	}
-   Pageable pageable = PageRequest.of(page, size, sort);
-   
-	
-	User user = userRepository.findByEmail(getEmailFromSecurityContext()).orElse(null);
-	Page<Account> accounts = accountRepository.findByCustomer(user.getCustomer(),pageable);
-	
-	return new PagedResponse<AccountResponseDto>(convertAccounttoAccountResponseDto(accounts.getContent()),accounts.getNumber(),accounts.getSize(),accounts.getTotalElements(),accounts.getTotalPages(),accounts.isLast());
-	
-}
 
 }
