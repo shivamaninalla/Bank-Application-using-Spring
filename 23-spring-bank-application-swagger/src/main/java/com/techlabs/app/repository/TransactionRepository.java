@@ -28,4 +28,6 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long> {
 	Page<Transaction> findAllByTransactionDateBetween(LocalDateTime fromDate, LocalDateTime toDate,
 			PageRequest pageRequest);
 
+	
+	Page<Transaction> findAllByTransactionDateBetween(LocalDateTime fromDate, LocalDateTime toDate, Pageable pageable);
 }

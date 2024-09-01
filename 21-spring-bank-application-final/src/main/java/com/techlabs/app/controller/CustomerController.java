@@ -1,7 +1,11 @@
 package com.techlabs.app.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -49,23 +53,36 @@ public class CustomerController {
 
 	@Operation(summary = "View Passbook")
 	@GetMapping("/passbook/{accountNumber}")
-	public ResponseEntity<PagedResponse<TransactionResponseDto>> viewPassbook(
-			@PathVariable(name = "accountNumber") long accountNumber,
-			@RequestParam(name = "from", defaultValue = "#{T(java.time.LocalDateTime).now().minusDays(30).toString()}") String from,
-			@RequestParam(name = "to", defaultValue = "#{T(java.time.LocalDateTime).now().toString()}") String to,
+	public ResponseEntity<PagedResponse<TransactionResponseDto>> getPassbook(@PathVariable(name = "accountNumber") long accountNumber,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size,
 			@RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-			@RequestParam(name = "direction", defaultValue = "asc") String direction)
-			throws DocumentException, IOException, MessagingException {
-		LocalDateTime fromDate = LocalDateTime.parse(from);
-		LocalDateTime toDate = LocalDateTime.parse(to);
-		PagedResponse<TransactionResponseDto> passbook = bankService.viewPassbook(accountNumber, fromDate, toDate, page,
-				size, sortBy, direction);
+			@RequestParam(name = "direction", defaultValue = "asc") String direction,
+			@RequestParam(name = "from", defaultValue = "#{T(java.time.LocalDate).now().minusDays(30).toString()}") String from,
+			@RequestParam(name = "to", defaultValue = "#{T(java.time.LocalDate).now().toString()}") String to) throws DocumentException, IOException, MessagingException {
+		System.out.println("In cust controller"+from);
+		LocalDateTime fromDate = (from != null && !from.isEmpty()) 
+	            ? parseDate(from).atStartOfDay() 
+	            : LocalDateTime.now().minusDays(30).withHour(0).withMinute(0).withSecond(0).withNano(0);
 
-		return new ResponseEntity<PagedResponse<TransactionResponseDto>>(passbook, HttpStatus.OK);
+	    LocalDateTime toDate = (to != null && !to.isEmpty()) 
+	            ? parseDate(to).atTime(23, 59, 59) 
+	            : LocalDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(0);
+		return new ResponseEntity<PagedResponse<TransactionResponseDto>>(bankService.viewPassbook(accountNumber, fromDate, toDate, page, size, sortBy, direction),HttpStatus.OK);
 	}
-
+	
+	
+	private static final List<DateTimeFormatter> FORMATTERS = Arrays.asList(DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+			DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+	private LocalDate parseDate(String dateStr) {
+		for (DateTimeFormatter formatter : FORMATTERS) {
+			try {
+				return LocalDate.parse(dateStr, formatter);
+			} catch (DateTimeParseException e) {
+			}
+		}
+		return LocalDate.now();
+	}
 	@Operation(summary = "View All Accounts")
 	@GetMapping("/accounts")
 	public ResponseEntity<PagedResponse<AccountResponseDto>> viewAllAccounts(@RequestParam(name = "page", defaultValue = "0") int page,
@@ -96,5 +113,7 @@ public class CustomerController {
 		return new ResponseEntity<AccountResponseDto>(bankService.depositAmount(accountNumber, amount),
 				HttpStatus.ACCEPTED);
 	}
+	
+	
 
 }

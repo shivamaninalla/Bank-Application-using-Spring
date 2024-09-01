@@ -18,6 +18,9 @@ private long customer_id;
 	
 	private String lastName;
 	
+	private String email;
+	
+	private boolean active;
 	
 	private double totalBalance;
 	

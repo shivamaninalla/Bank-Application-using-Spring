@@ -29,7 +29,7 @@ PagedResponse<CustomerResponseDto> getAllCustomers(int page, int size, String so
 
 	TransactionResponseDto doTransaction(long senderAccountno, long receiverAccountno, double amount);
 
-	PagedResponse<TransactionResponseDto> viewAllTransaction(LocalDateTime fromDate, LocalDateTime toDate, int page, int size, String sortBy, String direction);
+//	PagedResponse<TransactionResponseDto> viewAllTransaction(LocalDateTime fromDate, LocalDateTime toDate, int page, int size, String sortBy, String direction);
 
 	PagedResponse<TransactionResponseDto> viewPassbook(long accountNo, LocalDateTime fromDate, LocalDateTime toDate, int page, int size, String sortBy, String direction) throws DocumentException, IOException, MessagingException;
 
@@ -40,7 +40,7 @@ PagedResponse<CustomerResponseDto> getAllCustomers(int page, int size, String so
 	AccountResponseDto depositAmount(long accountNumber, double amount);
 	
 
-
+	PagedResponse<TransactionResponseDto> viewAllTransaction(LocalDateTime fromDate, LocalDateTime toDate, int page, int size, String sortBy, String direction);
 
 	String activateCustomer(long customerID);
 
@@ -63,4 +63,11 @@ PagedResponse<CustomerResponseDto> getAllCustomers(int page, int size, String so
 
 
 	PagedResponse<AccountResponseDto> viewAllAccounts(int page, int size, String sortBy, String direction);
+
+
+
+	String getEmailByID(long userId);
+
+
+
 }

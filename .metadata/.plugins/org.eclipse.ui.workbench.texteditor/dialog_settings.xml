@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="context"/>
+		<item key="selection" value="Customer not found"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="true"/>
 		<item key="wholeword" value="true"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="Customer not found"/>
 			<item value="contextHolder"/>
 			<item value="context"/>
 			<item value="isActiveAccount"/>
@@ -22,7 +23,6 @@
 			<item value="passbook"/>
 			<item value="createCustomer"/>
 			<item value="deposit"/>
-			<item value="monocept"/>
 		</list>
 		<list key="replacehistory">
 			<item value="techlabs"/>
@@ -35,8 +35,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="242"/>
-		<item key="DIALOG_Y_ORIGIN" value="302"/>
+		<item key="DIALOG_X_ORIGIN" value="-2"/>
+		<item key="DIALOG_Y_ORIGIN" value="392"/>
 		<item key="DIALOG_WIDTH" value="511"/>
 		<item key="DIALOG_HEIGHT" value="523"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

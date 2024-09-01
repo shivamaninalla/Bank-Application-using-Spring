@@ -37,8 +37,18 @@ import com.techlabs.app.entity.Customer;
 import com.techlabs.app.entity.Transaction;
 import com.techlabs.app.entity.TransactionType;
 import com.techlabs.app.entity.User;
+import com.techlabs.app.exception.AllExceptions.AccountAlreadyActiveException;
+import com.techlabs.app.exception.AllExceptions.AccountDeletedException;
+import com.techlabs.app.exception.AllExceptions.AccountInactiveException;
+import com.techlabs.app.exception.AllExceptions.AccountNumberWrongException;
+import com.techlabs.app.exception.AllExceptions.BankNotFoundException;
+import com.techlabs.app.exception.AllExceptions.CustomerAlreadyActiveException;
+import com.techlabs.app.exception.AllExceptions.CustomerAlreadyAssignedException;
+import com.techlabs.app.exception.AllExceptions.CustomerAlreadyDeletedException;
+import com.techlabs.app.exception.AllExceptions.CustomerIsNotActiveException;
+import com.techlabs.app.exception.AllExceptions.InsufficientFundsException;
+import com.techlabs.app.exception.AllExceptions.UserNotFoundException;
 import com.techlabs.app.exception.CustomerNotFoundException;
-import com.techlabs.app.exception.NoRecordFoundException;
 import com.techlabs.app.repository.AccountRepository;
 import com.techlabs.app.repository.BankRepository;
 import com.techlabs.app.repository.CustomerRepository;
@@ -90,6 +100,7 @@ public class BankServiceImpl implements BankService {
 	@Override
 	public PagedResponse<CustomerResponseDto> getAllCustomers(int page, int size, String sortBy, String direction) {
 		Sort sort = Sort.by(sortBy);
+		System.out.println("In get all customers");
 		if (direction.equalsIgnoreCase(Sort.Direction.DESC.name())) {
 			sort = sort.descending();
 		} else {
@@ -107,10 +118,13 @@ public class BankServiceImpl implements BankService {
 		List<CustomerResponseDto> customers = new ArrayList<>();
 
 		for (Customer i : all) {
+			User user=userRepository.findByCustomer(i);
 			CustomerResponseDto customer = new CustomerResponseDto();
 			customer.setCustomer_id(i.getCustomer_id());
 			customer.setFirstName(i.getFirstName());
 			customer.setLastName(i.getLastName());
+			customer.setEmail(user.getEmail());
+			customer.setActive(i.isActive());
 			customer.setTotalBalance(i.getTotalBalance());
 			customer.setAccounts(convertAccounttoAccountResponseDto(i.getAccounts()));
 			customers.add(customer);
@@ -140,10 +154,12 @@ public class BankServiceImpl implements BankService {
 
 	@Override
 	public CustomerResponseDto findCustomerByid(long id) {
+		System.out.println("In find customer by id");
 		Customer customer = customerRepository.findById(id).orElse(null);
 		if (customer == null) {
 			String message = "Customer not found with id: " + id;
 			logger.error(message);
+//			throw new CustomerNotFoundException(message);
 			throw new CustomerNotFoundException(message);
 		} else {
 			return convertCustomerToCustomerResponseDto(customer);
@@ -152,16 +168,19 @@ public class BankServiceImpl implements BankService {
 
 	@Override
 	public CustomerResponseDto addAccount(long cid, int bid) {
-
+System.out.println("In add account");
 		Account account = new Account();
 		Bank bank = bankRepository.findById(bid).orElse(null);
+		if(bank==null) {
+			throw new BankNotFoundException("Bank not found with id: "+bid);
+		}
 
 		if (bank != null) {
 			Customer customer = customerRepository.findById(cid).orElse(null);
 			if (!customer.isActive()) {
 				String message = "Customer is not activated " + customer.getCustomer_id();
 				logger.error(message);
-				throw new NoRecordFoundException(message);
+				throw new CustomerNotFoundException(message);
 			}
 
 			if (customer != null) {
@@ -228,43 +247,54 @@ public class BankServiceImpl implements BankService {
 
 	@Override
 	public TransactionResponseDto doTransaction(long senderAccountNumber, long receiverAccountNumber, double amount) {
+		System.out.println("In do transaction");
 		Optional<User> user = userRepository.findByEmail(getEmailFromSecurityContext());
 		Customer customer = user.get().getCustomer();
 		List<Account> accounts = user.get().getCustomer().getAccounts();
 		if (!customer.isActive()) {
 			String message = "Customer is not activated " + customer.getCustomer_id();
 			logger.error(message);
-			throw new NoRecordFoundException(message);
+//			throw new NoRecordFoundException(message);
+			throw new CustomerIsNotActiveException(message);
 		}
 		for (Account account : accounts) {
 			if (account.getAccountNumber() == senderAccountNumber) {
 				Account senderAccount = accountRepository.findById(senderAccountNumber).orElse(null);
 				Account receiverAccount = accountRepository.findById(receiverAccountNumber).orElse(null);
+				if(receiverAccount == null) {
+					throw new AccountNumberWrongException("Recevier account wrong");
+
+				}
 				if (!senderAccount.isActive()) {
 					String message = "Account is not activated " + senderAccount.getAccountNumber();
 					logger.error(message);
-					throw new NoRecordFoundException(message);
+					throw new CustomerIsNotActiveException(message);
 				}
 				if (!receiverAccount.isActive()) {
 					String message = "Account is not activated " + receiverAccount.getAccountNumber();
 					logger.error(message);
-					throw new NoRecordFoundException(message);
+					throw new CustomerIsNotActiveException(message);
 				}
+				
+				
+				
 				if (senderAccount == null || receiverAccount == null) {
 					String message = "Please check the sender account number " + senderAccountNumber
 							+ " and receiver account number " + receiverAccountNumber;
 					logger.error(message);
-					throw new NoRecordFoundException(message);
+//					throw new NoRecordFoundException(message);
+					throw new AccountNumberWrongException(message);
 				}
 				if (senderAccount.equals(receiverAccount)) {
 					String message = "self transfer to the same account number not possible";
 					logger.error(message);
-					throw new NoRecordFoundException(message);
+					throw new AccountNumberWrongException(message);
 				}
 				if (senderAccount.getBalance() < amount) {
 					String message = "Insufficient Funds please check the balance again";
 					logger.error(message);
-					throw new NoRecordFoundException(message);
+//					throw new NoRecordFoundException(message);
+					throw new InsufficientFundsException(message);
 				}
 				senderAccount.setBalance(senderAccount.getBalance() - amount);
 				receiverAccount.setBalance(receiverAccount.getBalance() + amount);
@@ -289,7 +319,7 @@ public class BankServiceImpl implements BankService {
 				return convertTransactiontoTransactionDto(transactionRepository.save(transaction));
 			}
 		}
-		throw new NoRecordFoundException("Your account number is wrong");
+		throw new AccountNumberWrongException("Your account number is wrong");
 
 	}
 
@@ -317,27 +347,27 @@ public class BankServiceImpl implements BankService {
 		return transactionResponseDto;
 	}
 
-	@Override
-	public PagedResponse<TransactionResponseDto> viewAllTransaction(LocalDateTime fromDate, LocalDateTime toDate,
-			int page, int size, String sortBy, String direction) {
-		Sort sort = Sort.by(sortBy);
-		if (direction.equalsIgnoreCase("desc")) {
-			sort = sort.descending();
-		} else {
-			sort = sort.ascending();
-		}
-
-		PageRequest pageRequest = PageRequest.of(page, size, sort);
-		System.out.println("Page request: " + pageRequest);
-		Page<Transaction> pagedResponse = transactionRepository.findAllByTransactionDateBetween(fromDate, toDate,
-				pageRequest);
-		System.out.println("Fetched transactions: " + convertTransactiontoTransactionDto(pagedResponse.getContent()));
-		PagedResponse<TransactionResponseDto> response = new PagedResponse<>(
-				convertTransactiontoTransactionDto(pagedResponse.getContent()), pagedResponse.getNumber(),
-				pagedResponse.getSize(), pagedResponse.getTotalElements(), pagedResponse.getTotalPages(),
-				pagedResponse.isLast());
-		return response;
-	}
+//	@Override
+//	public PagedResponse<TransactionResponseDto> viewAllTransaction(LocalDateTime fromDate, LocalDateTime toDate,
+//			int page, int size, String sortBy, String direction) {
+//		Sort sort = Sort.by(sortBy);
+//		if (direction.equalsIgnoreCase("desc")) {
+//			sort = sort.descending();
+//		} else {
+//			sort = sort.ascending();
+//		}
+//
+//		PageRequest pageRequest = PageRequest.of(page, size, sort);
+//		System.out.println("Page request: " + pageRequest);
+//		Page<Transaction> pagedResponse = transactionRepository.findAllByTransactionDateBetween(fromDate, toDate,
+//				pageRequest);
+//		System.out.println("Fetched transactions: " + convertTransactiontoTransactionDto(pagedResponse.getContent()));
+//		PagedResponse<TransactionResponseDto> response = new PagedResponse<>(
+//				convertTransactiontoTransactionDto(pagedResponse.getContent()), pagedResponse.getNumber(),
+//				pagedResponse.getSize(), pagedResponse.getTotalElements(), pagedResponse.getTotalPages(),
+//				pagedResponse.isLast());
+//		return response;
+//	}
 
 	private List<TransactionResponseDto> covertPassbooktopassbookDto(List<Transaction> viewPassbook, long accountNo) {
 		List<TransactionResponseDto> transactionResponseDtos = new ArrayList<>();
@@ -367,17 +397,19 @@ public class BankServiceImpl implements BankService {
 
 	@Override
 	public UserResponseDto createCustomer(CustomerRequestDto customerRequestDto, long userID) {
+		System.out.println("In create customer");
 		User user = userRepository.findById(userID).orElse(null);
 		if (user == null) {
 			String message = "User not found with the following id " + userID;
 			logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new UserNotFoundException(message);
 		}
 		if (user.getCustomer() != null) {
 			String message = "Customer already assigned cannot create another customer to the user";
 			logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new CustomerAlreadyAssignedException(message);
 		}
+		System.out.println("In create customer");
 		Customer customer = convertCustomerRequestToCustomer(customerRequestDto);
 		user.setCustomer(customer);
 		String subject = "Welcome to SBI! Your Customer ID Has Been Successfully Created";
@@ -430,11 +462,12 @@ public class BankServiceImpl implements BankService {
 
 	@Override
 	public String updateProfile(ProfileRequestDto profileRequestDto) {
+		System.out.println("In update profile");
 		User user = userRepository.findByEmail(getEmailFromSecurityContext()).orElse(null);
 		if (user.getCustomer() == null) {
 			String message = "Cannot update the customer details still you havn't have customer id";
 			logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new CustomerNotFoundException(message);
 		}
 		Customer customer = user.getCustomer();
 		if (profileRequestDto.getEmail() != null && !profileRequestDto.getEmail().isEmpty()
@@ -473,6 +506,7 @@ public class BankServiceImpl implements BankService {
 			int page, int size, String sortBy, String direction)
 			throws DocumentException, IOException, MessagingException {
 		Sort sort = Sort.by(sortBy);
+		System.out.println("In view passbook");
 		if (direction.equalsIgnoreCase(Sort.Direction.DESC.name())) {
 			sort.descending();
 		} else {
@@ -484,7 +518,7 @@ public class BankServiceImpl implements BankService {
 		if (user.get().getCustomer() == null) {
 			String message = "still you havn't have customer id";
 			logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new CustomerNotFoundException(message);
 		}
 		List<Account> accounts = user.get().getCustomer().getAccounts();
 		for (Account acc : accounts) {
@@ -516,7 +550,7 @@ public class BankServiceImpl implements BankService {
 		}
 		String message = "Please give valid account number";
 		logger.error(message);
-		throw new NoRecordFoundException(message);
+		throw new AccountNumberWrongException(message);
 
 	}
 
@@ -544,21 +578,24 @@ public class BankServiceImpl implements BankService {
 		}
 		return list;
 	}
+	
+
 
 	@Override
 	public AccountResponseDto depositAmount(long accountNumber, double amount) {
+		System.out.println("In depposit amount");
 		User user = userRepository.findByEmail(getEmailFromSecurityContext()).orElse(null);
 		List<Account> accounts = user.getCustomer().getAccounts();
 		Customer customer = user.getCustomer();
 		if (customer == null) {
 			String message = "Customer not associated with the user";
 			logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new CustomerNotFoundException(message);
 		}
 		if (!customer.isActive()) {
 			String message = "Customer is not activated and his id is " + customer.getCustomer_id();
 			logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new CustomerIsNotActiveException(message);
 		}
 
 		for (Account account : accounts) {
@@ -587,23 +624,24 @@ public class BankServiceImpl implements BankService {
 				return convertAccounttoAccountResponseDto(account);
 			}
 		}
-		throw new NoRecordFoundException("Please check account number properly");
+		throw new AccountNumberWrongException("Please check account number properly");
 
 	}
 
 	@Override
 	public String deleteCustomer(long customerID) {
+		System.out.println("In delete customer");
 		Customer customer = customerRepository.findById(customerID).orElse(null);
 		if (customer == null) {
 			String message ="Customer not found with the id " + customerID;
 			logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new CustomerNotFoundException(message);
 
 		}
 		if (!customer.isActive()) {
 			String message ="Customer is already deleted";
 					logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new CustomerAlreadyDeletedException(message);
 		}
 		customer.setActive(false);
 		List<Account> accounts = customer.getAccounts();
@@ -616,16 +654,17 @@ public class BankServiceImpl implements BankService {
 
 	@Override
 	public String activateCustomer(long customerID) {
+		System.out.println("In activate customer");
 		Customer customer = customerRepository.findById(customerID).orElse(null);
 		if (customer == null) {
 			String message ="Customer not found with the id " + customerID;
 			logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new CustomerNotFoundException(message);
 		}
 		if (customer.isActive()) {
 			String message ="Customer is already active";
 			logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new CustomerAlreadyActiveException(message);
 		}
 		customer.setActive(true);
 		customerRepository.save(customer);
@@ -634,6 +673,7 @@ public class BankServiceImpl implements BankService {
 
 	@Override
 	public String deleteAccount(long accountNumber) {
+		System.out.println("In delete account");
 		Account account = accountRepository.findById(accountNumber).orElse(null);
 		Customer customer = account.getCustomer();
 		User user2 = customer.getUser();
@@ -642,12 +682,12 @@ public class BankServiceImpl implements BankService {
 		if (account == null) {
 			String message ="Account not found with the account number " + accountNumber;
 			logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new AccountNumberWrongException(message);
 		}
 		if (!account.isActive()) {
 			String message ="Account is already deleted";
 			logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new AccountDeletedException(message);
 		}
 		account.setActive(false);
 		accountRepository.save(account);
@@ -659,7 +699,7 @@ public class BankServiceImpl implements BankService {
 
 	@Override
 	public String activateAccount(long accountNumber) {
-
+System.out.println("In activate account");
 		Account account = accountRepository.findById(accountNumber).orElse(null);
 		Customer customer = account.getCustomer();
 		User user2 = customer.getUser();
@@ -668,17 +708,17 @@ public class BankServiceImpl implements BankService {
 		if (account == null) {
 String message="Account not found with the account number " + accountNumber;
 logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new AccountNumberWrongException(message);
 		}
 		if (account.isActive()) {
 			String message="Account is already active";
 			logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new AccountAlreadyActiveException(message);
 		}
 		if (!account.getCustomer().isActive()) {
 			String message="Customer is not activated customerId: " + account.getCustomer().getCustomer_id();
 			logger.error(message);
-			throw new NoRecordFoundException(message
+			throw new CustomerIsNotActiveException(message
 					);
 		}
 		account.setActive(true);
@@ -692,6 +732,7 @@ logger.error(message);
 
 	@Override
 	public AccountResponseDto viewBalance(long accountNumber) {
+		System.out.println("In view balance");
 		String email = getEmailFromSecurityContext();
 
 		Optional<User> user = userRepository.findByEmail(email);
@@ -703,14 +744,14 @@ logger.error(message);
 		}
 		String message="Please check the account number";
 		logger.error(message);
-		throw new NoRecordFoundException(message);
+		throw new AccountNumberWrongException(message);
 	}
 
 	private boolean isAccountActive(Account account) {
 		if (!account.isActive()) {
 			String message="Your account is not activated";
 			logger.error(message);
-			throw new NoRecordFoundException(message);
+			throw new AccountInactiveException(message);
 		}
 		return true;
 	}
@@ -744,6 +785,7 @@ logger.error(message);
 	@Override
 	public PagedResponse<AccountResponseDto> viewAllAccounts(int page, int size, String sortBy, String direction) {
 		Sort sort = Sort.by(sortBy);
+		System.out.println("In view all accounts");
 		if (direction.equalsIgnoreCase(Sort.Direction.DESC.name())) {
 			sort.descending();
 		} else {
@@ -758,6 +800,36 @@ logger.error(message);
 				accounts.getNumber(), accounts.getSize(), accounts.getTotalElements(), accounts.getTotalPages(),
 				accounts.isLast());
 
+	}
+	
+	
+	@Override
+	public PagedResponse<TransactionResponseDto> viewAllTransaction(LocalDateTime fromDate, LocalDateTime toDate,
+			int page, int size, String sortBy, String direction) {
+		System.out.println("In view all transactions");
+		Sort sort = Sort.by(sortBy);
+		if (direction.equalsIgnoreCase("desc")) {
+			sort = sort.descending();
+		} else {
+			sort = sort.ascending();
+		}
+		PageRequest pageRequest = PageRequest.of(page, size, sort);
+		System.out.println("Page request: " + pageRequest);
+		Page<Transaction> pagedResponse = transactionRepository.findAllByTransactionDateBetween(fromDate, toDate,
+				pageRequest);
+
+		PagedResponse<TransactionResponseDto> response = new PagedResponse<>(
+				convertTransactiontoTransactionDto(pagedResponse.getContent()), pagedResponse.getNumber(),
+				pagedResponse.getSize(), pagedResponse.getTotalElements(), pagedResponse.getTotalPages(),
+				pagedResponse.isLast());
+		return response;
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public String getEmailByID(long userId) {
+		User user = userRepository.getById(userId);
+		return user.getEmail();
 	}
 
 }

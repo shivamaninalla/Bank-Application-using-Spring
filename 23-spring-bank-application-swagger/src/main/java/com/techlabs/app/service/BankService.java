@@ -19,7 +19,7 @@ public interface BankService {
 
 PagedResponse<CustomerResponseDto> getAllCustomers(int page, int size, String sortBy, String direction);
 
-	
+PagedResponse<TransactionResponseDto> viewAllTransaction(LocalDateTime fromDate, LocalDateTime toDate, int page, int size, String sortBy, String direction);
 
 	//String deleteCustomerById(long id);
 
@@ -29,7 +29,7 @@ PagedResponse<CustomerResponseDto> getAllCustomers(int page, int size, String so
 
 	TransactionResponseDto doTransaction(long senderAccountno, long receiverAccountno, double amount);
 
-	PagedResponse<TransactionResponseDto> viewAllTransaction(LocalDateTime fromDate, LocalDateTime toDate, int page, int size, String sortBy, String direction);
+	//PagedResponse<TransactionResponseDto> getAllTransaction(LocalDateTime fromDate, LocalDateTime toDate, int page, int size, String sortBy, String direction);
 
 	PagedResponse<TransactionResponseDto> viewPassbook(long accountNo, LocalDateTime fromDate, LocalDateTime toDate, int page, int size, String sortBy, String direction) throws DocumentException, IOException, MessagingException;
 

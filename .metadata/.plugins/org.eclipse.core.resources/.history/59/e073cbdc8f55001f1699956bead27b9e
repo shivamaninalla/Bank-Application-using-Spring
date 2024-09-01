@@ -1,5 +1,0 @@
-package com.techlabs.app.repository;
-
-public interface AdminRepository {
-
-}
